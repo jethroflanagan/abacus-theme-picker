@@ -1,0 +1,31 @@
+.palette {
+  display: flex;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  &-swatch {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+  }
+  &-label {
+    
+  }
+  &-rgb {
+    color: #555;
+    font-size: 12px;
+  }
+}
+.groups {
+  display: flex;
+}
+.group {
+  margin-right: 10px;
+  &-name {
+    font-sze: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+}

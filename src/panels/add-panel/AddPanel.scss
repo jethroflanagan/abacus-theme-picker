@@ -1,0 +1,41 @@
+.AddPanel {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  width: 50px;
+  overflow: hidden;
+  animation: show-add-panel .1s ease-out;
+
+  @keyframes show-add-panel {
+    0% { width: 0 }
+    100% { width: 50px }
+  }
+
+  &-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 3px;
+    padding: 10px;
+    width: 50px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background: #524a4a;
+    transition: background .3s ease-out;
+  }
+
+  &-symbol {
+    color: #aaa;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+}

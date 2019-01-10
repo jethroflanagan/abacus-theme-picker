@@ -1,0 +1,25 @@
+.ControlPanel {
+  background: #524a4a;
+  width: 200px;
+  min-height: 100vh;
+  color: #eee;
+  &-title {
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  &-experience {
+    padding: 20px;
+    background: rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    color: #ccc;
+    cursor: pointer;
+    &--active {
+      background: var(--primary-color);
+      color: #fff;
+    }
+    &:first-child {
+      border-top: 1px solid rgba(0,0,0,.2);
+    }
+  }
+}

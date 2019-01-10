@@ -1,0 +1,27 @@
+    .Button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      color: #222;
+      border: 1px solid #555;
+      height: 32px;
+      font-size: 14px;
+      padding: 0 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        // background: var(--primary-color);
+        // color: #fff;
+        // border-color: transparent;
+        opacity: 0.8;
+      }
+      &--primary {
+        background: var(--primary-color);
+        border-color: transparent;
+        color: #fff;
+      }
+      &:not(:last-child) {
+        margin-bottom: 5px;
+      }
+    }

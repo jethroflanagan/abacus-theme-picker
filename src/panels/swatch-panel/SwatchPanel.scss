@@ -1,0 +1,32 @@
+.SwatchPanel {
+  overflow: hidden;
+  width: 200px;
+  border-right: 1px solid #ccc;
+  animation: show-panel .2s ease-out;
+  @keyframes show-panel {
+    0% { width: 0 }
+    100% { width: 200px }
+  }
+  &-content {
+    padding: 20px;
+    position: relative;
+    background: #fff;
+    width: 200px;
+  }
+  &-swatches {
+    margin: 15px 0;
+    &--no-group {
+      margin-top: 40px;
+    }
+  }
+
+}
+.SwatchGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  &-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+}

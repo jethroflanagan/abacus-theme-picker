@@ -1,0 +1,151 @@
+/* @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro'); */
+
+:root {
+  --primary-color: red;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 0;
+}
+.list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width:100%;
+}
+.outer {
+  min-width: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  margin: 5px;
+  padding: 5px;
+  padding-bottom: 30px;
+  position: relative;
+}
+.outer-label {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 10px;
+  color:#00AEEF;
+}
+.input-custom {
+  font-size: 16px;
+  border-radius: 4px;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #ccc;
+}
+.inner {
+  min-width: 80px;
+  min-height: 80px;
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 10px;
+  /* padding: 10px; */
+  margin: 0 5px 5px 0;
+  color: #00AEEF;
+}
+.inner-label {
+
+    width: 100%;
+    padding: 10px;
+    text-align: right;
+    border-radius: 0 0 10px 10px;
+}
+.inner-text {
+    width: 100%;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 30px;
+    cursor: default;
+}
+.text-hint {
+  display: none;
+}
+
+.outer:hover .inner-label {
+    background: rgba(255,255,255,0.7);
+    color: black;
+}
+.outer:hover .inner-text {
+    background: rgba(255,255,255,0.7);
+    color: black !important;
+}
+.outer:hover .text-hint {
+    display: block;
+}
+.outer:hover .text-real {
+    display: none;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 20px;
+  padding: 5px;
+  margin: 15px 0;
+}
+.controls .slider {
+  min-width: 300px;
+  width: 100%;
+}
+.controls .slider.small {
+  min-width: 30px;
+  max-width: 100px;
+}
+.controls label {
+  font-size: 16px;
+}
+input[type=number] {
+  margin: 0 5px;
+  text-align: right;
+  min-height: 16px;
+  padding: 5px 10px;
+  font-size: 16px;
+  width: 50px;
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+.heading {
+  padding: 5px;
+  font-size: 25px;
+  margin-top: 20px;
+}
+.slider.reversed {
+  direction: rtl;
+}
+.note {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.Choices {
+  display: flex;
+}
+
+.App {
+  display: flex;
+}
+
+.PaletteList {
+  margin-left: 40px;
+}
