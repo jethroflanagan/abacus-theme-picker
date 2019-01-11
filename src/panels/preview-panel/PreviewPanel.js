@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import Swatch from './Swatch';
 import { ExportControls } from './components/ExportControls';
 
 import { toRgbCss } from '../../utils/helpers';
@@ -15,10 +14,10 @@ export class PreviewPanel extends Component  {
       tertiaryList: [],
       separateColors: false,
     }
-  } 
+  }
 
   createSwatch(swatch, { weight = 1, label = '' } = {}) {
-    const labelStyle = swatch.isDark 
+    const labelStyle = swatch.isDark
     ? {
       color: '#aaa',
       mixBlendMode: 'screen',

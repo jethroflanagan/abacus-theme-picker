@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import tinycolor  from './tinycolor';
+import tinycolor  from 'tinycolor2';
 import './style.scss';
 import _ from 'lodash';
 import { SwatchPanel } from './panels/swatch-panel/SwatchPanel';
@@ -131,55 +131,38 @@ class App extends Component {
   }
 
   chooseSwatch(swatch, index) {
-    const palette = [...this.state.palette];
-    
+    let palette = [...this.state.palette];
+
     // remove following panels
     palette.length = index + 1;
 
-    // palette[index] = {
-    //   label: 
-    //   swatch,
-    // };
-    const current = palette[index];
-    
+    let current = palette[index];
+
     let mix = swatch.mix.map((name) => _.find(COLORS, { name }));
-    console.log(mix);
     // handle deselect
     if (current.name === swatch.name) {
       palette.pop();
     }
     else {
       current.swatch = swatch;
-      palette.push({
+      current = {
         label: 'Colour ' + palette.length,
-        mix: swatch.mix,
+        isGrouped: false,
+        // convert to swatches
+        mix: _.map(swatch.mix, name => _.find(COLORS, { name })),
         swatch: null,
-      })
+      };
+      palette.push(current);
     }
-
     // if primary, change theme
     if (index === 0) {
       document.documentElement.style.setProperty('--primary-color', '#' + swatch.hex);
     }
-    
+
+    // palette = _.map(COLORS, name => _.find(COLORS, { name }))
+
     this.setState({ palette });
   }
-  // changeTertiary(swatch, index = 0) {
-  //   let { numTertiary } = this.state;
-  //   const tertiary = _.clone(this.state.tertiary);
-  //   let mix = [];
-  //   // handle deslect  
-  //   if (tertiary[index] && swatch.name === tertiary[index].name) {
-  //     tertiary.length = index;
-  //     numTertiary = index;
-  //   }  
-  //   else {
-  //     tertiary[index] = swatch;
-  //     tertiary.length = index + 1;
-  //   }
-  //   numTertiary = index + 1;
-  //   this.setState({ tertiary, numTertiary });
-  // }
 
   addTertiary() {
     this.setState({ numTertiary: this.state.numTertiary + 1 });
@@ -205,40 +188,14 @@ class App extends Component {
     this.setState({ experience, neutrals });
   }
 
-  // createTertiaryPanel(index) {
-  //   const tertiaryMix = this.getTertiaryMix(index);
-  //   return (
-  //     <SwatchPanel key={'Color' + index} list={tertiaryMix} label={'Colour ' + (index + 1)} onActiveChanged={(swatch) => this.changeTertiary(swatch, index)}/>
-  //   );
-  // }
-
-  // getTertiaryMix(index) {
-  //   const { primary, secondary, tertiary } = this.state;
-
-  //   // use secondary mix
-  //   const tertiaryMix = primary.mix.map((name) => _.find(COLORS, { name }).name);
-    
-  //   // remove previous colour choices
-  //   // remove around
-  //   const previousColor = secondary;
-  //   // tertiaryMix = this.removeAround(previousColor, tertiaryMix);
-
-  //   for (let i = 0; i < index + 1; i++) {
-  //     previousColor = i === 0 ? secondary : tertiary[i - 1];
-  //     tertiaryMix = removeAround(previousColor.name, tertiaryMix);
-  //   }
-
-  //   return _.map(tertiaryMix, name => _.find(COLORS, { name }));
-  // }
 
   createSwatchPanel({ label, mix, onChanged, isGrouped, swatch }) {
-    // const mix = primary.mix.map((name) => _.find(COLORS, { name }));
     return <SwatchPanel key={'Swatch ' + label} list={mix} label={label} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} />
   }
 
   render() {
-    const panelLabels = ['Primary', 'Secondary', 'Colour {{index}}'];
     const { palette, cta } = this.state;
+    console.log(palette);
 
     const ctaPanel = this.createSwatchPanel({ label: 'Call to action', mix: DAWN_DUSK_GROUPED, isGrouped: true, onChanged: ()=>{}, swatch: cta });
 

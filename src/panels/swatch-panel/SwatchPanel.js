@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Swatch from './components/Swatch';
 import MainSwatch from './components/MainSwatch'
 import './SwatchPanel.scss';
 
 export class SwatchPanel extends Component  {
+
+  static props = {
+    grouped: PropTypes.Bool,
+  };
 
   constructor(props) {
     super(props);
@@ -42,7 +47,7 @@ export class SwatchPanel extends Component  {
     return (
       <div className="SwatchGroup">
         {_.map(list, (swatch, i) => 
-          <Swatch key={swatch.name + '_' + i} swatch={swatch} active={!active || active === swatch} onClick={() => this.makeActive(swatch)} />
+          <Swatch key={swatch.name + '_' + i} swatch={swatch} active={'' + (!active || active === swatch)} onClick={() => this.makeActive(swatch)} />
         )}
       </div>
     );
