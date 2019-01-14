@@ -57,6 +57,23 @@ const GROUPS = {
 // }
 
 
+// const NEUTRALS = [
+//   'Transactional': [
+//     { name: "White", color: tinycolor({ r: 255, g: 255, b: 255 }), group: 'neutrals' },
+
+//   ]
+// ]
+
+const NEUTRALS = [
+  { name: "Graphite 3%", color: tinycolor({ r: 249, g: 248, b: 248 }), group: 'neutrals' },
+  { name: "Graphite 5%", color: tinycolor({ r: 244, g: 243, b: 243 }), group: 'neutrals' },
+  { name: "Graphite 13%", color: tinycolor({ r: 227, g: 226, b: 226 }), group: 'neutrals' },
+  { name: "Graphite 13%", color: tinycolor({ r: 227, g: 226, b: 226 }), group: 'neutrals' },
+  { name: "Graphite 64%", color: tinycolor({ r: 120, g: 114, b: 114 }), group: 'neutrals' },
+  { name: "Graphite 82%", color: tinycolor({ r: 82, g: 74, b: 74 }), group: 'neutrals' },
+  { name: "Graphite 100%", color: tinycolor({ r: 45, g: 35, b: 35 }), group: 'neutrals' },
+];
+
 let COLORS = [
   { name: "White", color: tinycolor({ r: 255, g: 255, b: 255 }), group: 'neutrals' },
   { name: "Silver", color: tinycolor({ r: 115, g: 100, b: 100 }), group: 'neutrals' },
@@ -84,7 +101,7 @@ let COLORS = [
   hsv: item.color.toHsv(),
   hex: item.color.toHex(),
   greyscale: item.color.greyscale().toRgb(),
-  labelColor: item.color.isDark() ? '#fff': '#000',
+  nameColor: item.color.isDark() ? '#fff': '#000',
   isDark: item.color.isDark(),
 }));
 
@@ -115,7 +132,7 @@ class App extends Component {
       cta: _.find(COLORS, { name: 'Prepared' }),
       palette: [
         {
-          label: 'Primary',
+          name: 'Primary',
           mix: DAWN_DUSK_GROUPED,
           swatch: null,
           isGrouped: true,
@@ -133,7 +150,6 @@ class App extends Component {
     palette.length = Math.min(palette.length, index + 1);
 
     let current = palette[index];
-console.log('current', swatch.mix);
     const currentMix = palette.length === 1 ? DAWN_DUSK : current.mix;
     const swatchMix = swatch.mix.filter(name => _.find(currentMix, { name }));
 
@@ -145,17 +161,17 @@ console.log('current', swatch.mix);
     }
     else {
       current.swatch = swatch;
-      let label = index < paletteNames.length ? paletteNames[index] : paletteNames.slice(-1)[0];
-      label = label.replace('{{index}}', palette.length - paletteNames.length + 1);
+      let name = index < paletteNames.length ? paletteNames[index] : paletteNames.slice(-1)[0];
+      name = name.replace('{{index}}', palette.length - paletteNames.length + 1);
       current = {
-        label,
+        name,
         isGrouped: false,
         // convert to swatches
         mix,
         swatch: null,
       };
 
-      if (mix.length) {
+      if (palette.length < 5 && mix.length) {
         palette.push(current);
       }
     }
@@ -169,9 +185,13 @@ console.log('current', swatch.mix);
     this.setState({ palette });
   }
 
-  addTertiary() {
-    this.setState({ numTertiary: this.state.numTertiary + 1 });
+  chooseCta(swatch) {
+    this.setState({ cta: swatch });
   }
+
+  // addTertiary() {
+  //   this.setState({ numTertiary: this.state.numTertiary + 1 });
+  // }
 
   changeExperience(experience) {
     // just use name refs
@@ -194,30 +214,29 @@ console.log('current', swatch.mix);
   }
 
 
-  createSwatchPanel({ label, mix, onChanged, isGrouped, swatch }) {
-    return <SwatchPanel key={'Swatch ' + label} list={mix} label={label} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} />
+  createSwatchPanel({ name, mix, onChanged, isGrouped, swatch }) {
+    return <SwatchPanel key={'Swatch ' + name} list={mix} name={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} />
   }
 
   render() {
-    const { palette, cta } = this.state;
-    console.log(palette);
+    const { palette, cta, neutrals } = this.state;
 
-    const ctaPanel = this.createSwatchPanel({ label: 'Call to action', mix: DAWN_DUSK_GROUPED, isGrouped: true, onChanged: ()=>{}, swatch: cta });
+    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: DAWN_DUSK_GROUPED, isGrouped: true, onChanged: swatch => this.chooseCta(swatch), swatch: cta });
 
     let canAddPanels = false;
     const panels = palette.map((panel, index) => {
       const onChanged = (swatch) => this.chooseSwatch(swatch, index);
-      return this.createSwatchPanel({ label: panel.label, mix: panel.mix, onChanged, isGrouped: panel.isGrouped })
+      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped })
     });
 
-
+    // const neutralList = _.map(neutrals, name => _.find(COLORS, { name }));
     return (
       <div className="App">
         <ControlPanel onChange={name => this.changeExperience(name)} />
         {ctaPanel}
         {panels}
         {canAddPanels ? <AddPanel onClick={() => this.addTertiary()} /> : null }
-        {/* <PreviewPanel primary={palette[0]} secondary={null} tertiaryList={palette.slice(2)} neutralList={[]}/> */}
+        <PreviewPanel palette={palette} neutralList={neutrals} cta={cta} />
         {/* <ExportPanel /> */}
 
       </div>

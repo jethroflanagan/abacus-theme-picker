@@ -46,12 +46,12 @@
     display: flex;
     align-items:flex-end;
     transition: margin .1s ease-out;
-    &:first-child {
-      border-radius: 3px 3px 0 0;
-    }
-    &:last-child {
-      border-radius: 0 0 3px 3px;
-    }
+    // &:first-child {
+    //   border-radius: 3px 3px 0 0;
+    // }
+    // &:last-child {
+    //   border-radius: 0 0 3px 3px;
+    // }
     &Label {
       padding: 10px;
     }
@@ -59,6 +59,42 @@
   &-margin {
     height: 100%;
 
+  }
+
+  // weights
+  &-card {
+    &Colors {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 40;
+    }
+    &Neutrals {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 55;
+    }
+    &Cta {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 5;
+    }
+  }
+  &-bk {
+    &Colors {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 40;
+    }
+    &Neutrals {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 55;
+    }
+    &Cta {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 5;
+    }
   }
   // &-controls {
   //   display: flex;
