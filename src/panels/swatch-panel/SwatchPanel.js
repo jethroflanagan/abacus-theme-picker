@@ -47,7 +47,7 @@ export class SwatchPanel extends Component  {
     return (
       <div className="SwatchGroup">
         {_.map(list, (swatch, i) => 
-          <Swatch key={swatch.name + '_' + i} swatch={swatch} active={'' + (!active || active === swatch)} onClick={() => this.makeActive(swatch)} />
+          <Swatch key={swatch.name + '_' + i} swatch={swatch} active={!active || active === swatch} onClick={() => this.makeActive(swatch)} />
         )}
       </div>
     );

@@ -15,46 +15,46 @@ const GROUPS = {
 }
 
 // remove colours that are preceptually nearby each other using a naiive method
-function removeAround(name, list) {
-  const dusk = _.filter(list, name => _.find(GROUPS.dusk.swatches, { name }));
-  const dawn = _.filter(list, name => _.find(GROUPS.dawn.swatches, { name }));
+// function removeAround(name, list) {
+//   const dusk = _.filter(list, name => _.find(GROUPS.dusk.swatches, { name }));
+//   const dawn = _.filter(list, name => _.find(GROUPS.dawn.swatches, { name }));
   
-  // use sparse arrays as position is important in removal
-  const sparseDusk = Array(7);
-  _.map(dusk, name => {
-    let index = _.findIndex(GROUPS.dusk.swatches, { name });
-    // match dusk and dawn palette contrasts and indexes with a gap after "Care"
-    if (index > 0) index++;
-    sparseDusk[index] = name;
-  });
+//   // use sparse arrays as position is important in removal
+//   const sparseDusk = Array(7);
+//   _.map(dusk, name => {
+//     let index = _.findIndex(GROUPS.dusk.swatches, { name });
+//     // match dusk and dawn palette contrasts and indexes with a gap after "Care"
+//     if (index > 0) index++;
+//     sparseDusk[index] = name;
+//   });
 
-  const sparseDawn = Array(7);
-  _.map(dawn, name => {
-    let index = _.findIndex(GROUPS.dawn.swatches, { name });
-    sparseDawn[index] = name;
-  });
+//   const sparseDawn = Array(7);
+//   _.map(dawn, name => {
+//     let index = _.findIndex(GROUPS.dawn.swatches, { name });
+//     sparseDawn[index] = name;
+//   });
 
-  let startFrom = sparseDawn.indexOf(name);
+//   let startFrom = sparseDawn.indexOf(name);
   
-  // if not in dawn, try dusk
-  if (startFrom === -1) {
-    startFrom = sparseDusk.indexOf(name);
-  } 
+//   // if not in dawn, try dusk
+//   if (startFrom === -1) {
+//     startFrom = sparseDusk.indexOf(name);
+//   } 
 
-  // start a position back
-  startFrom--;
-  const removeAmount = Math.min(3, startFrom + 3);
+//   // start a position back
+//   startFrom--;
+//   const removeAmount = Math.min(3, startFrom + 3);
 
-  let filtered = [sparseDawn, sparseDusk].map(list => {
-    list.splice(Math.max(startFrom, 0), removeAmount);
-    return list;
-  });
-  filtered = _.flatten(filtered);
-  // remove undefined (from sparse array)
-  filtered = _.filter(filtered, name => name);
+//   let filtered = [sparseDawn, sparseDusk].map(list => {
+//     list.splice(Math.max(startFrom, 0), removeAmount);
+//     return list;
+//   });
+//   filtered = _.flatten(filtered);
+//   // remove undefined (from sparse array)
+//   filtered = _.filter(filtered, name => name);
   
-  return  filtered;
-}
+//   return  filtered;
+// }
 
 
 let COLORS = [
@@ -64,20 +64,20 @@ let COLORS = [
   { name: "Graphite", color: tinycolor({ r: 45, g: 35, b: 35 }), group: 'neutrals' },
   { name: "Black", color: tinycolor({ r: 0, g: 0, b: 0 }), group: 'neutrals' },
 
-  { name: "Energy", color: tinycolor({ r: 255, g: 120, b: 15 }), group: 'dawn' }, 
-  { name: "Prepared", color: tinycolor({ r: 250, g: 85, b: 30 }), group: 'dawn' },
-  { name: "Agile", color: tinycolor({ r: 245, g: 45, b: 40 }), group: 'dawn' },
-  { name: "Passion", color: tinycolor({ r: 220, g: 0, b: 50 }), group: 'dawn' },
-  { name: "Warmth", color: tinycolor({ r: 190, g: 0, b: 40 }), group: 'dawn' },
-  { name: "Human", color: tinycolor({ r: 170, g: 5, b: 45 }), group: 'dawn' },
-  { name: "Grounded", color: tinycolor({ r: 150, g: 5, b: 40 }), group: 'dawn' },
+  { name: "Energy", color: tinycolor({ r: 255, g: 120, b: 15 }), group: 'dawn', mix: ['Prepared', 'Agile', 'Passion', 'Warmth', 'Surprise', 'Calm', 'Luxury', 'Depth'] },
+  { name: "Prepared", color: tinycolor({ r: 250, g: 85, b: 30 }), group: 'dawn', mix: ['Energy', 'Passion', 'Warmth', 'Grounded', 'Calm', 'Luxury', 'Depth'] },
+  { name: "Agile", color: tinycolor({ r: 245, g: 45, b: 40 }), group: 'dawn', mix: ['Energy', 'Prepared', 'Warmth', 'Human', 'Grounded', 'Calm', 'Luxury', 'Depth'] },
+  { name: "Passion", color: tinycolor({ r: 220, g: 0, b: 50 }), group: 'dawn', mix: ['Energy', 'Prepared', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury', 'Depth'] },
+  { name: "Warmth", color: tinycolor({ r: 190, g: 0, b: 40 }), group: 'dawn', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Grounded', 'Luxury', 'Depth'] },
+  { name: "Human", color: tinycolor({ r: 170, g: 5, b: 45 }), group: 'dawn', mix: ['Agile', 'Passion', 'Luxury', 'Depth'] },
+  { name: "Grounded", color: tinycolor({ r: 150, g: 5, b: 40 }), group: 'dawn', mix: ['Prepared', 'Agile', 'Passion', 'Warmth', 'Depth'] },
 
-  { name: "Care", color: tinycolor({ r: 240, g: 90, b: 120 }), group: 'dusk' },
-  { name: "Smile", color: tinycolor({ r: 240, g: 50, b: 90 }), group: 'dusk' },
-  { name: "Surprise", color: tinycolor({ r: 175, g: 20, b: 75 }), group: 'dusk' },
-  { name: "Calm", color: tinycolor({ r: 135, g: 10, b: 60 }), group: 'dusk' },
-  { name: "Luxury", color: tinycolor({ r: 100, g: 0, b: 50 }), group: 'dusk' },
-  { name: "Depth", color: tinycolor({ r: 80, g: 10, b: 40 }), group: 'dusk' },
+  { name: "Care", color: tinycolor({ r: 240, g: 90, b: 120 }), group: 'dusk', mix: ['Passion', 'Smile', 'Surprise', 'Calm', 'Luxury', 'Depth'] },
+  { name: "Smile", color: tinycolor({ r: 240, g: 50, b: 90 }), group: 'dusk', mix: ['Passion', 'Care', 'Surprise', 'Calm', 'Luxury', 'Depth'] },
+  { name: "Surprise", color: tinycolor({ r: 175, g: 20, b: 75 }), group: 'dusk', mix: ['Energy', 'Passion', 'Care', 'Smile', 'Calm', 'Luxury', 'Depth'] },
+  { name: "Calm", color: tinycolor({ r: 135, g: 10, b: 60 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Care', 'Smile', 'Surprise', 'Luxury', 'Depth'] },
+  { name: "Luxury", color: tinycolor({ r: 100, g: 0, b: 50 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Care', 'Smile', 'Surprise', 'Calm', 'Depth'] },
+  { name: "Depth", color: tinycolor({ r: 80, g: 10, b: 40 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
 ].map((item) => ({
   ...item,
   rgb: item.color.toRgb(),
@@ -86,7 +86,6 @@ let COLORS = [
   greyscale: item.color.greyscale().toRgb(),
   labelColor: item.color.isDark() ? '#fff': '#000',
   isDark: item.color.isDark(),
-  // mix: removeAround(item.name),
 }));
 
 COLORS.forEach((color) => {
@@ -103,10 +102,6 @@ const DAWN_DUSK_GROUPED = {
   dusk: GROUPS.dusk,
 };
 const DAWN_DUSK = [...DAWN_DUSK_GROUPED.dawn.swatches, ...DAWN_DUSK_GROUPED.dusk.swatches];
-
-DAWN_DUSK.forEach((swatch) => {
-  swatch.mix = removeAround(swatch.name, DAWN_DUSK.map(s => s.name));
-});
 
 class App extends Component {
   constructor() {
@@ -131,28 +126,38 @@ class App extends Component {
   }
 
   chooseSwatch(swatch, index) {
+    const paletteNames = ['Secondary', 'Colour {{index}}'];
     let palette = [...this.state.palette];
 
     // remove following panels
-    palette.length = index + 1;
+    palette.length = Math.min(palette.length, index + 1);
 
     let current = palette[index];
+console.log('current', swatch.mix);
+    const currentMix = palette.length === 1 ? DAWN_DUSK : current.mix;
+    const swatchMix = swatch.mix.filter(name => _.find(currentMix, { name }));
 
-    let mix = swatch.mix.map((name) => _.find(COLORS, { name }));
+    const mix = swatchMix.map((name) => _.find(DAWN_DUSK, { name }));
+
     // handle deselect
     if (current.name === swatch.name) {
       palette.pop();
     }
     else {
       current.swatch = swatch;
+      let label = index < paletteNames.length ? paletteNames[index] : paletteNames.slice(-1)[0];
+      label = label.replace('{{index}}', palette.length - paletteNames.length + 1);
       current = {
-        label: 'Colour ' + palette.length,
+        label,
         isGrouped: false,
         // convert to swatches
-        mix: _.map(swatch.mix, name => _.find(COLORS, { name })),
+        mix,
         swatch: null,
       };
-      palette.push(current);
+
+      if (mix.length) {
+        palette.push(current);
+      }
     }
     // if primary, change theme
     if (index === 0) {
@@ -212,7 +217,7 @@ class App extends Component {
         {ctaPanel}
         {panels}
         {canAddPanels ? <AddPanel onClick={() => this.addTertiary()} /> : null }
-        {/*<PreviewPanel primary={primary} secondary={secondary} tertiaryList={tertiary} neutralList={neutrals}/>*/}
+        {/* <PreviewPanel primary={palette[0]} secondary={null} tertiaryList={palette.slice(2)} neutralList={[]}/> */}
         {/* <ExportPanel /> */}
 
       </div>
