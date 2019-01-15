@@ -26,6 +26,7 @@ export class ExportControls extends Component  {
         <Button label="Export for developers" type="tertiary" />
         <Button label="Use in Sketch" type="tertiary" />
         <Button label="Use in Form Designer" type="tertiary" />
+        <Button label="Copy to clipboard" type="tertiary" />
 
         <div className="ExportControls-extra">
           <Button label={separateColors ? 'Juxtapose palette' : 'Separate palette'} type="tertiary" onClick={() => this.toggleSeparateColors()}/>

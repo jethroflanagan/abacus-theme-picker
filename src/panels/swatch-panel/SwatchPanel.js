@@ -19,11 +19,12 @@ export class SwatchPanel extends Component  {
   } 
 
   makeActive(swatch) {
-    const active = ( 
-      swatch === this.state.active 
-      ? null // deselect
-      : swatch // select
-    )
+    // const active = (
+    //   swatch === this.state.active
+    //   ? null // deselect
+    //   : swatch // select
+    // )
+    const active = swatch;
     this.setState({ active });
     if (this.props.onActiveChanged) {
       this.props.onActiveChanged(swatch);

@@ -36,11 +36,11 @@ export class PreviewPanel extends Component  {
     this.setState({ separateColors })
   }
 
-  createNamedList({ palette, weights } = { weights: {} }) {
+  createNamedList(palette) {
     const list = _.map(palette, (item, i) => {
       const { name, swatch } = item;
       if (!swatch) return null;
-      let weight = weights[name];
+      let weight = item.weight;
       if (!weight) weight = 0;
       return this.createSwatch(swatch, { weight, name });
     });
@@ -48,7 +48,7 @@ export class PreviewPanel extends Component  {
     return list;
   }
 
-  createBasicList({ swatches, weights } = { weights: [] }) {
+  createBasicList({ swatches, weights }) {
     const list = _.map(swatches, (swatch, i) => {
       if (!swatch) return null;
       const { name } = swatch;
@@ -61,13 +61,10 @@ export class PreviewPanel extends Component  {
   }
 
   render() {
-    const { palette, cta, neutralList } = this.props;
+    const { palette, cta, neutrals } = this.props;
     const {separateColors} = this.state;
-    const weights = {
-      'Primary': 5,
-      'Secondary': 3,
-      default: 1,
-    };
+    console.log(palette, neutrals);
+
     let ctaItem = null;
     let ctaBackground = null;
     if (cta) {
@@ -79,7 +76,7 @@ export class PreviewPanel extends Component  {
       <div className="PalettePreview">
         <div className="PalettePreview-bk">
           <div className="PalettePreview-bkColors">
-            { this.createNamedList({ palette, weights }) }
+            { this.createNamedList(palette) }
           </div>
           <div className="PalettePreview-bkNeutrals">
             {/* { neutralList ? this.createList({ palette: neutralList, weights: { default: 1 } }) : null } */}
@@ -91,10 +88,10 @@ export class PreviewPanel extends Component  {
         <div className="PalettePreview-margin" style={{marginRight: 'auto'}} />
         <div className={'PalettePreview-card' + (separateColors ? ' PalettePreview-card--padded' : '')}>
           <div className="PalettePreview-cardColors">
-            { this.createNamedList({ palette, weights }) }
+            { this.createNamedList(palette) }
           </div>
           <div className="PalettePreview-cardNeutrals">
-            { neutralList ? this.createBasicList({ swatches: neutralList, weights: [] }) : null }
+            { neutrals ? this.createNamedList(neutrals) : null }
           </div>
           <div className="PalettePreview-cardCta">
           { ctaItem }
