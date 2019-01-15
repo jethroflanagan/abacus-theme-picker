@@ -39,7 +39,7 @@ export class ControlPanel extends Component  {
   constructor(props) {
     super(props);
     this.state = {
-      experience: null
+      experience: props.experience,
     }
   } 
 

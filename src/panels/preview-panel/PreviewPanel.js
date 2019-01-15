@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { ExportControls } from './components/ExportControls';
+import { Labeller } from './components/Labeller';
 
 import { toRgbCss } from '../../utils/helpers';
 import './PreviewPanel.scss';
@@ -15,7 +16,7 @@ export class PreviewPanel extends Component  {
     }
   }
 
-  createSwatch(swatch, { weight = 1, name = '' } = {}) {
+  createSwatch(swatch, { weight = 1, name = '', showLabel = true }) {
     const nameStyle = swatch.isDark
     ? {
       color: '#aaa',
@@ -25,9 +26,10 @@ export class PreviewPanel extends Component  {
       color: '#888',
       mixBlendMode: 'multiply',
     }
+    console.log(showLabel);
     return (
       <div className='PalettePreview-swatch' style={{ backgroundColor: toRgbCss(swatch.rgb), flexGrow: weight}} key={swatch.name}>
-        <div className="PalettePreview-swatchLabel" style={nameStyle}>{name}</div>
+        { showLabel ? <div className="PalettePreview-swatchLabel" style={nameStyle}>{name}</div> : null }
       </div>
     )
   }
@@ -36,29 +38,29 @@ export class PreviewPanel extends Component  {
     this.setState({ separateColors })
   }
 
-  createNamedList(palette) {
+  createList(palette, options) {
     const list = _.map(palette, (item, i) => {
       const { name, swatch } = item;
       if (!swatch) return null;
       let weight = item.weight;
       if (!weight) weight = 0;
-      return this.createSwatch(swatch, { weight, name });
+      return this.createSwatch(swatch, { ...options, weight, name });
     });
 
     return list;
   }
 
-  createBasicList({ swatches, weights }) {
-    const list = _.map(swatches, (swatch, i) => {
-      if (!swatch) return null;
-      const { name } = swatch;
-      let weight = weights[i];
-      if (!weight) weight = 1;
-      return this.createSwatch(swatch, { weight, name });
-    });
+  // createBasicList({ swatches, weights }) {
+  //   const list = _.map(swatches, (swatch, i) => {
+  //     if (!swatch) return null;
+  //     const { name } = swatch;
+  //     let weight = weights[i];
+  //     if (!weight) weight = 1;
+  //     return this.createSwatch(swatch, { weight, name });
+  //   });
 
-    return list;
-  }
+  //   return list;
+  // }
 
   render() {
     const { palette, cta, neutrals } = this.props;
@@ -76,7 +78,7 @@ export class PreviewPanel extends Component  {
       <div className="PalettePreview">
         <div className="PalettePreview-bk">
           <div className="PalettePreview-bkColors">
-            { this.createNamedList(palette) }
+            { this.createList(palette) }
           </div>
           <div className="PalettePreview-bkNeutrals">
             {/* { neutralList ? this.createList({ palette: neutralList, weights: { default: 1 } }) : null } */}
@@ -88,10 +90,11 @@ export class PreviewPanel extends Component  {
         <div className="PalettePreview-margin" style={{marginRight: 'auto'}} />
         <div className={'PalettePreview-card' + (separateColors ? ' PalettePreview-card--padded' : '')}>
           <div className="PalettePreview-cardColors">
-            { this.createNamedList(palette) }
+            { this.createList(palette) }
           </div>
           <div className="PalettePreview-cardNeutrals">
-            { neutrals ? this.createNamedList(neutrals) : null }
+            { neutrals ? this.createList(neutrals, { showLabel: false }) : null }
+            <Labeller labels={neutrals} style={{}}/>
           </div>
           <div className="PalettePreview-cardCta">
           { ctaItem }

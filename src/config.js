@@ -211,11 +211,12 @@ export const PALETTE_WEIGHTS = {
 };
 
 export let COLORS = [
-  { name: "White", color: tinycolor({ r: 255, g: 255, b: 255 }), group: 'neutrals' },
-  { name: "Silver", color: tinycolor({ r: 115, g: 100, b: 100 }), group: 'neutrals' },
-  { name: "Platinum", color: tinycolor({ r: 90, g: 75, b: 75 }), group: 'neutrals' },
-  { name: "Graphite", color: tinycolor({ r: 45, g: 35, b: 35 }), group: 'neutrals' },
-  { name: "Black", color: tinycolor({ r: 0, g: 0, b: 0 }), group: 'neutrals' },
+  // { name: "White", color: tinycolor({ r: 255, g: 255, b: 255 }), group: 'neutrals' },
+  // { name: "Silver", color: tinycolor({ r: 115, g: 100, b: 100 }), group: 'neutrals' },
+  // { name: "Platinum", color: tinycolor({ r: 90, g: 75, b: 75 }), group: 'neutrals' },
+  // { name: "Graphite", color: tinycolor({ r: 45, g: 35, b: 35 }), group: 'neutrals' },
+  // { name: "Black", color: tinycolor({ r: 0, g: 0, b: 0 }), group: 'neutrals' },
+  ...NEUTRALS,
 
   { name: "Energy", color: tinycolor({ r: 255, g: 120, b: 15 }), group: 'dawn', mix: ['Prepared', 'Agile', 'Passion', 'Warmth', 'Surprise', 'Calm', 'Luxury', 'Depth'] },
   { name: "Prepared", color: tinycolor({ r: 250, g: 85, b: 30 }), group: 'dawn', mix: ['Energy', 'Passion', 'Warmth', 'Grounded', 'Calm', 'Luxury', 'Depth'] },
@@ -242,6 +243,14 @@ COLORS.forEach((color) => {
   group.swatches.push(color);
   // return { ...color, mix: removeAround(color.name) };
 });
+
+export const CALL_TO_ACTION = [
+  'Prepared',
+  'Smile',
+  'Text-Darkest',
+].map(name => _.find(COLORS, { name }));
+
+console.log(CALL_TO_ACTION);
 
 export const DAWN_DUSK_GROUPED = {
   dawn: GROUPS.dawn,

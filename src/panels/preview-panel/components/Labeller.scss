@@ -1,0 +1,28 @@
+.Labeller {
+  position: absolute;
+  width: 100%;
+  transform: translate(100%);
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &-legend {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    white-space: nowrap;
+  }
+  &-legendLine {
+    display: flex;
+    align-items: center;
+  }
+  &-swatch {
+    display: block;
+    border-radius: 20px;
+    border: 1px solid #111;
+    width: 10px;
+    height: 10px;
+    background: #111;
+    margin: 0 5px;
+  }
+}

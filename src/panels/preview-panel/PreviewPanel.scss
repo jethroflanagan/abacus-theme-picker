@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: column;
     width: 200px;
+    position: relative;
     // padding: 10px;
     border-radius: 3px;
     background: #fff;
@@ -53,9 +54,9 @@
     //   border-radius: 0 0 3px 3px;
     // }
     &Label {
-      padding: 10px;
+      padding: 0 0 5px 5px;
       font-size: 13px;
-      // position: absolute;
+      position: absolute;
     }
   }
   &-margin {
@@ -68,24 +69,26 @@
     &Colors {
       display: flex;
       flex-direction: column;
-      flex-grow: 40;
+      flex-grow: 41;
     }
     &Neutrals {
       display: flex;
       flex-direction: column;
       flex-grow: 55;
+      position: relative;
     }
     &Cta {
       display: flex;
       flex-direction: column;
-      flex-grow: 5;
+      flex-grow: 4;
+      margin-top: -1px; // HACK: fix render glitch white line on some sizes
     }
   }
   &-bk {
     &Colors {
       display: flex;
       flex-direction: column;
-      flex-grow: 40;
+      flex-grow: 41;
     }
     &Neutrals {
       display: flex;
@@ -95,7 +98,7 @@
     &Cta {
       display: flex;
       flex-direction: column;
-      flex-grow: 5;
+      flex-grow: 4;
     }
   }
   // &-controls {

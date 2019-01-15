@@ -11,6 +11,7 @@ import {
   COLORS,
   NEUTRALS,
   GROUPS,
+  CALL_TO_ACTION,
   NEUTRALS_WEIGHTS,
   PALETTE_WEIGHTS,
   DAWN_DUSK,
@@ -141,13 +142,13 @@ class App extends Component {
   }
 
   createSwatchPanel({ name, mix, onChanged, isGrouped, swatch }) {
-    return <SwatchPanel key={'Swatch ' + name} list={mix} name={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} />
+    return <SwatchPanel key={'Swatch ' + name} list={mix} label={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} />
   }
 
   render() {
     const { palette, cta, experience } = this.state;
 
-    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: DAWN_DUSK_GROUPED, isGrouped: true, onChanged: swatch => this.chooseCta(swatch), swatch: cta });
+    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta });
 
     let canAddPanels = false;
     const panels = palette.map((panel, index) => {
@@ -172,13 +173,11 @@ class App extends Component {
     // const neutralList = _.map(neutrals, name => _.find(COLORS, { name }));
     return (
       <div className="App">
-        <ControlPanel onChange={name => this.changeExperience(name)} />
+        <ControlPanel onChange={name => this.changeExperience(name)} experience={experience} />
         {ctaPanel}
         {panels}
         {canAddPanels ? <AddPanel onClick={() => this.addTertiary()} /> : null }
         <PreviewPanel palette={weightedPalette} neutrals={weightedNeutrals} cta={cta} />
-        {/* <ExportPanel /> */}
-
       </div>
     );
   }
