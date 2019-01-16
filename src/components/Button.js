@@ -9,8 +9,11 @@ export class Button extends React.Component {
   }
 
   render() {
-    const { label, type } = this.props;
-    const classNames = 'Button' + ' Button--' + type;
+    const { label, type, stretch } = this.props;
+    let classNames = 'Button' + ' Button--' + type;
+    if (stretch) {
+      classNames += ' Button--stretch';
+    }
     return (
       <div className={classNames} type={type} {...this.props} >
         {label}

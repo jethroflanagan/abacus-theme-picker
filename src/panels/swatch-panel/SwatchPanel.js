@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Swatch from './components/Swatch';
-import MainSwatch from './components/MainSwatch'
+import MainSwatch from './components/MainSwatch';
+import { Button } from '../../components/Button';
+
 import './SwatchPanel.scss';
 
 export class SwatchPanel extends Component  {
@@ -47,7 +49,7 @@ export class SwatchPanel extends Component  {
 
     return (
       <div className="SwatchGroup">
-        {_.map(list, (swatch, i) => 
+        {_.map(list, (swatch, i) =>
           <Swatch key={swatch.name + '_' + i} swatch={swatch} active={!active || active === swatch} onClick={() => this.makeActive(swatch)} />
         )}
       </div>
@@ -64,8 +66,12 @@ export class SwatchPanel extends Component  {
     }
   }
 
+  removePanel() {
+    this.props.removePanel();
+  }
+
   render() {
-    const { list, grouped, label } = this.props;
+    const { list, grouped, label, canRemove } = this.props;
     let content = null;
     if (grouped) {
       content = (
@@ -82,12 +88,17 @@ export class SwatchPanel extends Component  {
         </div>
       );
     }
+    let removeButton = null;
+    if (canRemove) {
+      removeButton = <div className="SwatchPanel-remove" ><Button label='Remove colour' type="tertiary" stretch="true" onClick={() => this.removePanel()} /></div>;
+    }
 
     return (
       <div className="SwatchPanel">
         <div className="SwatchPanel-content">
           <MainSwatch swatch={this.state.active} label={label} />
           {content}
+          {removeButton}
         </div>
       </div>
     );

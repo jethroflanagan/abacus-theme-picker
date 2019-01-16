@@ -69,18 +69,18 @@
     &Colors {
       display: flex;
       flex-direction: column;
-      flex-grow: 41;
+      // flex-grow: 41;
     }
     &Neutrals {
       display: flex;
       flex-direction: column;
-      flex-grow: 55;
+      // flex-grow: 55;
       position: relative;
     }
     &Cta {
       display: flex;
       flex-direction: column;
-      flex-grow: 4;
+      // flex-grow: 4;
       margin-top: -1px; // HACK: fix render glitch white line on some sizes
     }
   }
@@ -88,17 +88,17 @@
     &Colors {
       display: flex;
       flex-direction: column;
-      flex-grow: 41;
+      // flex-grow: 41;
     }
     &Neutrals {
       display: flex;
       flex-direction: column;
-      flex-grow: 55;
+      // flex-grow: 55;
     }
     &Cta {
       display: flex;
       flex-direction: column;
-      flex-grow: 4;
+      // flex-grow: 4;
     }
   }
   // &-controls {

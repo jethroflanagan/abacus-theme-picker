@@ -18,57 +18,6 @@ import {
   DAWN_DUSK_GROUPED
 } from './config';
 
-// remove colours that are preceptually nearby each other using a naiive method
-// function removeAround(name, list) {
-//   const dusk = _.filter(list, name => _.find(GROUPS.dusk.swatches, { name }));
-//   const dawn = _.filter(list, name => _.find(GROUPS.dawn.swatches, { name }));
-
-//   // use sparse arrays as position is important in removal
-//   const sparseDusk = Array(7);
-//   _.map(dusk, name => {
-//     let index = _.findIndex(GROUPS.dusk.swatches, { name });
-//     // match dusk and dawn palette contrasts and indexes with a gap after "Care"
-//     if (index > 0) index++;
-//     sparseDusk[index] = name;
-//   });
-
-//   const sparseDawn = Array(7);
-//   _.map(dawn, name => {
-//     let index = _.findIndex(GROUPS.dawn.swatches, { name });
-//     sparseDawn[index] = name;
-//   });
-
-//   let startFrom = sparseDawn.indexOf(name);
-  
-//   // if not in dawn, try dusk
-//   if (startFrom === -1) {
-//     startFrom = sparseDusk.indexOf(name);
-//   }
-
-//   // start a position back
-//   startFrom--;
-//   const removeAmount = Math.min(3, startFrom + 3);
-
-//   let filtered = [sparseDawn, sparseDusk].map(list => {
-//     list.splice(Math.max(startFrom, 0), removeAmount);
-//     return list;
-//   });
-//   filtered = _.flatten(filtered);
-//   // remove undefined (from sparse array)
-//   filtered = _.filter(filtered, name => name);
-
-//   return  filtered;
-// }
-
-
-// const NEUTRALS = [
-//   'Transactional': [
-//     { name: "White", color: tinycolor({ r: 255, g: 255, b: 255 }), group: 'neutrals' },
-
-//   ]
-// ]
-
-
 class App extends Component {
   constructor() {
     super();
@@ -78,7 +27,8 @@ class App extends Component {
       experience: 'TransactionalWeb',
       numTertiary: 1,
       tertiary: [],
-      cta: _.find(COLORS, { name: 'Prepared' }),
+      cta: _.find(CALL_TO_ACTION, { name: 'Prepared' }),
+      hideFinalPanel: false,
       palette: [
         {
           name: 'Primary',
@@ -96,7 +46,6 @@ class App extends Component {
 
     // remove following panels
     palette.length = Math.min(palette.length, index + 1);
-
     let current = palette[index];
     const currentMix = palette.length === 1 ? DAWN_DUSK : current.mix;
     const swatchMix = swatch.mix.filter(name => _.find(currentMix, { name }));
@@ -141,19 +90,30 @@ class App extends Component {
     this.setState({ experience });
   }
 
-  createSwatchPanel({ name, mix, onChanged, isGrouped, swatch }) {
-    return <SwatchPanel key={'Swatch ' + name} list={mix} label={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} />
+  createSwatchPanel({ name, mix, onChanged, isGrouped, swatch, canRemove }) {
+    return <SwatchPanel key={'Swatch ' + name} list={mix} label={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} canRemove={canRemove} removePanel={() => this.removePanel()} />
+  }
+
+  removePanel() {
+    this.setState({ hideFinalPanel: true });
+  }
+  allowAddingPanels() {
+    this.setState({ hideFinalPanel: false });
   }
 
   render() {
-    const { palette, cta, experience } = this.state;
+    const { palette, cta, experience, hideFinalPanel } = this.state;
 
     const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta });
 
     let canAddPanels = false;
-    const panels = palette.map((panel, index) => {
+    const panels = palette.map((panel, index, list) => {
       const onChanged = (swatch) => this.chooseSwatch(swatch, index);
-      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped })
+      let canRemove = false;
+      if (index > 0 && index === list.length - 1) {
+        canRemove = true;
+      }
+      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped, canRemove })
     });
     const numSwatches = palette.filter(item => item.swatch).length;
 
@@ -167,9 +127,13 @@ class App extends Component {
     const neutrals = NEUTRALS_WEIGHTS[experience];
     const weightedNeutrals = neutrals.map((item, i) => ({
       ...item,
-      name: item.swatch.name,
+      name: item.swatch.hint,
       weight: neutrals[i].weight,
     }));
+    if (hideFinalPanel) {
+      panels.pop();
+    }
+
     // const neutralList = _.map(neutrals, name => _.find(COLORS, { name }));
     return (
       <div className="App">
@@ -177,6 +141,7 @@ class App extends Component {
         {ctaPanel}
         {panels}
         {canAddPanels ? <AddPanel onClick={() => this.addTertiary()} /> : null }
+        {hideFinalPanel ? <AddPanel onClick={() => this.allowAddingPanels()} /> : null}
         <PreviewPanel palette={weightedPalette} neutrals={weightedNeutrals} cta={cta} />
       </div>
     );

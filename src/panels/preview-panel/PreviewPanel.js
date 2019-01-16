@@ -4,6 +4,7 @@ import { ExportControls } from './components/ExportControls';
 import { Labeller } from './components/Labeller';
 
 import { toRgbCss } from '../../utils/helpers';
+import { PREVIEW_WEIGHTS } from '../../config';
 import './PreviewPanel.scss';
 
 export class PreviewPanel extends Component  {
@@ -64,41 +65,40 @@ export class PreviewPanel extends Component  {
 
   render() {
     const { palette, cta, neutrals } = this.props;
-    const {separateColors} = this.state;
-    console.log(palette, neutrals);
+    const { separateColors } = this.state;
 
     let ctaItem = null;
     let ctaBackground = null;
+    const ctaConfig = { weight: PREVIEW_WEIGHTS.cta, name: 'Call to action' };
     if (cta) {
-      ctaBackground = this.createSwatch(cta, { weight: 1, name: 'Call to action' });
-      ctaItem = this.createSwatch(cta, { weight: 1, name: 'Call to action' });
+      ctaBackground = this.createSwatch(cta, ctaConfig);
+      ctaItem = this.createSwatch(cta, ctaConfig);
     }
-
     return (
       <div className="PalettePreview">
         <div className="PalettePreview-bk">
-          <div className="PalettePreview-bkColors">
+          <div className="PalettePreview-bkColors" style={{ flexGrow: PREVIEW_WEIGHTS.palette }}>
             { this.createList(palette) }
           </div>
-          <div className="PalettePreview-bkNeutrals">
+          <div className="PalettePreview-bkNeutrals" style={{ flexGrow: PREVIEW_WEIGHTS.neutrals }}>
             {/* { neutralList ? this.createList({ palette: neutralList, weights: { default: 1 } }) : null } */}
           </div>
-          <div className="PalettePreview-bkCta">
+          <div className="PalettePreview-bkCta" style={{ flexGrow: PREVIEW_WEIGHTS.cta }}>
             { ctaBackground }
           </div>
         </div>
         <div className="PalettePreview-margin" style={{marginRight: 'auto'}} />
         <div className={'PalettePreview-card' + (separateColors ? ' PalettePreview-card--padded' : '')}>
-          <div className="PalettePreview-cardColors">
+          <div className="PalettePreview-cardColors" style={{ flexGrow: PREVIEW_WEIGHTS.palette }}>
             { this.createList(palette) }
           </div>
-          <div className="PalettePreview-cardNeutrals">
+          <div className="PalettePreview-cardNeutrals" style={{ flexGrow: PREVIEW_WEIGHTS.neutrals }}>
             { neutrals ? this.createList(neutrals, { showLabel: false }) : null }
-            <Labeller labels={neutrals} style={{}}/>
           </div>
-          <div className="PalettePreview-cardCta">
+          <div className="PalettePreview-cardCta" style={{ flexGrow: PREVIEW_WEIGHTS.cta }}>
           { ctaItem }
           </div>
+          <Labeller palette={palette} cta={{swatch: cta, ...ctaConfig}} neutrals={neutrals} />
         </div>
         <div className="PalettePreview-margin" style={{marginLeft: 'auto'}}>
           <ExportControls setSeparateColors={val => this.setSeparateColors(val)} />

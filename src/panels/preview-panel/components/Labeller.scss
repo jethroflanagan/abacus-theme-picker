@@ -6,12 +6,29 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  &-section {
+    position: relative;
+    flex-grow: 1;
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+  }
+
   &-legend {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     white-space: nowrap;
-  }
+    flex-direction: column;
+}
+//   &-legend {
+//     position: absolute;
+//     display: flex;
+//     align-items: flex-start;
+//     justify-content: flex-start;
+//     white-space: nowrap;
+//     flex-direction: column;
+// }
   &-legendLine {
     display: flex;
     align-items: center;
@@ -24,5 +41,16 @@
     height: 10px;
     background: #111;
     margin: 0 5px;
+  }
+  &-label {
+    &Name {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    &SwatchName {
+      font-size: 12px;
+      margin-left: 20px;
+      margin-top: -5px;
+    }
   }
 }

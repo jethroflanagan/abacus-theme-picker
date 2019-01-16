@@ -21,16 +21,16 @@ export const GROUPS = {
 }
 
 export const NEUTRALS = [
-  { name: "White", color: tinycolor({ r: 255, g: 255, b: 255 }), group: 'neutrals' },
-  { name: "Background-Light", color: tinycolor({ r: 249, g: 248, b: 248 }), group: 'neutrals' },
-  { name: "Background-Mid", color: tinycolor({ r: 244, g: 243, b: 243 }), group: 'neutrals' },
-  { name: "Background-Dark", color: tinycolor({ r: 238, g: 237, b: 237 }), group: 'neutrals' },
-  { name: "Line-Light", color: tinycolor({ r: 227, g: 226, b: 226 }), group: 'neutrals' },
-  { name: "Line-Dark", color: tinycolor({ r: 202, g: 199, b: 199 }), group: 'neutrals' },
-  { name: "Text-Light", color: tinycolor({ r: 154, g: 149, b: 149 }), group: 'neutrals' },
-  { name: "Text-Mid", color: tinycolor({ r: 120, g: 114, b: 114 }), group: 'neutrals' },
-  { name: "Text-Dark", color: tinycolor({ r: 82, g: 74, b: 74 }), group: 'neutrals' },
-  { name: "Text-Darkest", color: tinycolor({ r: 45, g: 35, b: 35 }), group: 'neutrals' },
+  { name: "White", hint: 'Background', color: tinycolor({ r: 255, g: 255, b: 255 }), group: 'neutrals' },
+  { name: "Background-Light", hint: 'Background', color: tinycolor({ r: 249, g: 248, b: 248 }), group: 'neutrals' },
+  { name: "Background-Mid", hint: 'Background', color: tinycolor({ r: 244, g: 243, b: 243 }), group: 'neutrals' },
+  { name: "Background-Dark", hint: 'Background', color: tinycolor({ r: 238, g: 237, b: 237 }), group: 'neutrals' },
+  { name: "Line-Light", hint: 'Lines', color: tinycolor({ r: 227, g: 226, b: 226 }), group: 'neutrals' },
+  { name: "Line-Dark", hint: 'Lines', color: tinycolor({ r: 202, g: 199, b: 199 }), group: 'neutrals' },
+  { name: "Text-Light", hint: 'Headings', color: tinycolor({ r: 154, g: 149, b: 149 }), group: 'neutrals' },
+  { name: "Text-Mid", hint: 'Headings', color: tinycolor({ r: 120, g: 114, b: 114 }), group: 'neutrals' },
+  { name: "Text-Dark", hint: 'Body text', color: tinycolor({ r: 82, g: 74, b: 74 }), group: 'neutrals' },
+  { name: "Text-Darkest", hint: 'Body text', color: tinycolor({ r: 45, g: 35, b: 35 }), group: 'neutrals' },
 ].map(setupColor);
 
 export let NEUTRALS_WEIGHTS = {
@@ -250,10 +250,14 @@ export const CALL_TO_ACTION = [
   'Text-Darkest',
 ].map(name => _.find(COLORS, { name }));
 
-console.log(CALL_TO_ACTION);
-
 export const DAWN_DUSK_GROUPED = {
   dawn: GROUPS.dawn,
   dusk: GROUPS.dusk,
 };
 export const DAWN_DUSK = [...DAWN_DUSK_GROUPED.dawn.swatches, ...DAWN_DUSK_GROUPED.dusk.swatches];
+
+export const PREVIEW_WEIGHTS = {
+  palette: 41,
+  neutrals: 55,
+  cta: 4,
+};
