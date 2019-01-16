@@ -107,7 +107,7 @@ export class PreviewPanel extends Component  {
             <Labeller palette={palette} cta={{swatch: cta, ...ctaConfig}} neutrals={neutrals} />
           </div>
         </div>
-        <div className="PalettePreview-margin" style={{marginLeft: 'auto'}}>
+        <div className="PalettePreview-margin" style={{marginLeft: 'auto', width: '200px'}}>
           <ExportControls setSeparateColors={val => this.setSeparateColors(val)} changeVisibility={(val) => this.changeMenuVisibility(val)}/>
         </div>
       </div>

@@ -9,6 +9,8 @@
     justify-content: flex-end;
     display: flex;
     flex-direction: column;
+    padding-left: 20px;
+
   }
 
   &-legend {
@@ -26,6 +28,24 @@
 //     white-space: nowrap;
 //     flex-direction: column;
 // }
+
+  &-link {
+    position: absolute;
+    left: 0;
+    display: block;
+    border-radius: 20px;
+    width: 2px;
+    height: 2px;
+    background: #111;
+    // margin-top: 3px;
+    transform: translateY(-100%);
+  }
+  &-linkLine {
+    position: absolute;
+    width: 30px;
+    height: 1px;
+    background: #111;
+  }
   &-legendLine {
     display: flex;
     align-items: center;
@@ -37,7 +57,7 @@
     width: 10px;
     height: 10px;
     background: #111;
-    margin: 0 5px;
+    margin-right: 5px;
   }
   &-label {
     &Name {
