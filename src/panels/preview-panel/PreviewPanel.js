@@ -29,7 +29,7 @@ export class PreviewPanel extends Component  {
       mixBlendMode: 'multiply',
     }
     return (
-      <div className='PalettePreview-swatch' style={{ backgroundColor: toRgbCss(swatch.rgb), flexGrow: weight}} key={swatch.name}>
+      <div className='PalettePreview-swatch' style={{ background: toRgbCss(swatch.rgb), flexGrow: weight}} key={swatch.name}>
         {/* { showLabel ? <div className="PalettePreview-swatchLabel" style={nameStyle}>{name}</div> : null } */}
       </div>
     )
@@ -46,8 +46,11 @@ export class PreviewPanel extends Component  {
       let weight = item.weight;
       if (!weight) weight = 0;
       return this.createSwatch(swatch, { ...options, weight, name });
-    });
-
+    }).filter(item => item); // remove null
+    console.log('palette', list);
+    if (list.length === 0) {
+      return <div className='PalettePreview-swatchPlaceholder' key='placeholder' />
+    }
     return list;
   }
 
@@ -78,17 +81,16 @@ export class PreviewPanel extends Component  {
       ctaBackground = this.createSwatch(cta, ctaConfig);
       ctaItem = this.createSwatch(cta, ctaConfig);
     }
-    console.log(isMenuVisible);
     return (
       <div className="PalettePreview">
         <div className="PalettePreview-bk">
           <div className="PalettePreview-bkColors" style={{ flexGrow: PREVIEW_WEIGHTS.palette }}>
             { this.createList(palette) }
           </div>
-          <div className="PalettePreview-bkNeutrals" style={{ flexGrow: PREVIEW_WEIGHTS.neutrals }}>
+          <div className="PalettePreview-bkNeutrals" style={{ flexGrow: PREVIEW_WEIGHTS.neutrals - 6 }}>
             {/* { neutralList ? this.createList({ palette: neutralList, weights: { default: 1 } }) : null } */}
           </div>
-          <div className="PalettePreview-bkCta" style={{ flexGrow: PREVIEW_WEIGHTS.cta }}>
+          <div className="PalettePreview-bkCta" style={{ flexGrow: PREVIEW_WEIGHTS.cta + 6 }}>
             { ctaBackground }
           </div>
         </div>

@@ -103,8 +103,8 @@ class App extends Component {
 
   render() {
     const { palette, cta, experience, hideFinalPanel } = this.state;
-
-    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: (experience === 'Emailer' ? CALL_TO_ACTION_EMAIL: CALL_TO_ACTION), onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim: palette.length > 3 });
+    const isSlim = palette.length - (hideFinalPanel ? 1 : 0) > 3;
+    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: (experience === 'Emailer' ? CALL_TO_ACTION_EMAIL: CALL_TO_ACTION), onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim });
 
     let canAddPanels = false;
     const panels = palette.map((panel, index, list) => {
@@ -113,7 +113,7 @@ class App extends Component {
       if (index > 0 && index === list.length - 1) {
         canRemove = true;
       }
-      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped, canRemove, isSlim: list.length > 3 })
+      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped, canRemove, isSlim })
     });
     const numSwatches = palette.filter(item => item.swatch).length;
 
