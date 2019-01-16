@@ -94,11 +94,13 @@
   }
   &-margin {
     height: 100%;
-
+    position: relative;
+    z-index: -1; // don't show controls over palette
   }
 
   // weights
   &-card {
+    margin-left: 20px; // min left on small width
     &Colors {
       display: flex;
       flex-direction: column;
@@ -133,7 +135,11 @@
       flex-direction: column;
       // flex-grow: 4;
     }
+
   }
+
+
+
   // &-controls {
   //   display: flex;
   //   flex-direction: column;
@@ -146,4 +152,45 @@
   //     margin-top: auto;
   //   }
   // }
+}
+
+.PaddingToggle {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2px;
+  cursor: pointer;
+  &-pane {
+    width: 100%;
+    flex-grow: 1;
+    background: #aaa;
+    transition: margin .1s ease-out;
+    &:nth-child(2) {
+      background: #ccc;
+    }
+    &:nth-child(3) {
+      background: #ddd;
+    }
+  }
+  &--gap &-pane:not(:first-child) {
+    margin-top: 2px;
+  }
+  &-label {
+    position: absolute;
+    left: 45px;
+    white-space: nowrap;
+    visibility: hidden;
+    // background: #ccc;
+    // padding: 5px;
+  }
+  &:hover &-label {
+    visibility: visible;
+  }
 }

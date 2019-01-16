@@ -21,12 +21,12 @@ export class PreviewPanel extends Component  {
   createSwatch(swatch, { weight = 1 }) {
     const nameStyle = swatch.isDark
     ? {
-      color: '#aaa',
-      mixBlendMode: 'screen',
+      color: 'rba(255,255,255,.8)',
+      // mixBlendMode: 'screen',
     }
     : {
-      color: '#888',
-      mixBlendMode: 'multiply',
+      color: 'rgba(0,0,0,.8)',
+      // mixBlendMode: 'multiply',
     }
     return (
       <div className='PalettePreview-swatch' style={{ background: toRgbCss(swatch.rgb), flexGrow: weight}} key={swatch.name}>
@@ -83,6 +83,12 @@ export class PreviewPanel extends Component  {
     }
     return (
       <div className="PalettePreview">
+        <div className={`PaddingToggle ${separateColors ? ' PaddingToggle--gap': ''}`} onClick={() => this.setSeparateColors(!separateColors)}>
+          <div className="PaddingToggle-pane"/>
+          <div className="PaddingToggle-pane"/>
+          <div className="PaddingToggle-pane"/>
+          <div className="PaddingToggle-label">{ separateColors ? 'Hide gap' : 'Show gap' }</div>
+        </div>
         <div className="PalettePreview-bk">
           <div className="PalettePreview-bkColors" style={{ flexGrow: PREVIEW_WEIGHTS.palette }}>
             { this.createList(palette) }

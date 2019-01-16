@@ -13,14 +13,14 @@ export default (props) => {
       </div>
     );
   }
-  const labelStyle = swatch.isDark 
+  const labelStyle = swatch.isDark
     ? {
-      color: '#aaa',
-      mixBlendMode: 'screen',
-    } 
+      color: 'rgba(255,255,255,.8)',
+      // mixBlendMode: 'screen',
+    }
     : {
-      color: '#888',
-      mixBlendMode: 'multiply',
+      color: 'rgba(0,0,0,.8)',
+      // mixBlendMode: 'multiply',
     };
 
   return (
