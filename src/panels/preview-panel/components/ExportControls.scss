@@ -1,24 +1,23 @@
  .ExportControls {
     display: flex;
     flex-direction: column;
-    // position: absolute;
+    position: absolute;
+    top: 20px;
+    right: 0;
     align-items: flex-end;
     // top: 20px;
     // right: 20px;
     // bottom: 20px;
-    height: 100%;
+    // height: 100%;
     overflow: hidden;
-    transition: all .3s ease-out;
-    padding-right: 0;
-    &--visible {
-      padding-right: 20px;
-    }
+    padding: 0 20px;
     &-icon {
+      z-index: 1;
       width: 30px;
       height: 18px;
       position: absolute;
       right: 20px;
-      top: 20px;
+      top: 0;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -31,17 +30,22 @@
       }
     }
     &-menu {
-      width: 0;
-      transition: width .3s ease-out;
+      // width: 0;
+      transition: transform .3s;
+      transition-timing-function: ease-in;
+      // width: 180px;
+      transform: translateX(100%) translateX(20px);
+
       &--visible {
-        width: 180px;
+        transition-timing-function: ease-out;
+        transform: translateX(0);
       }
     }
     &-menuContent {
-      width: 180px;
+      // width: 180px;
       display: flex;
       flex-direction: column;
-      padding-top: 50px;
+      padding-top: 35px;
       height: 100%;
       align-items: flex-end;
       }

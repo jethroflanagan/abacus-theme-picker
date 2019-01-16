@@ -23,10 +23,10 @@ export class Labeller extends Component  {
     // const top = `calc(${(label.weight / totalWeight) * 100}%)`;
     // console.log('label', label);
     return (
-      <div key={id} className="Labeller-legend" style={{flexGrow: label.weight}}>
-        <div className="Labeller-link" style={{ top: `${position}%`}}>
+      <div key={id} className="Labeller-legend" style={{top: `${position}%`}}>
+        {/* <div className="Labeller-link" style={{ backgroundColor: toRgbCss(label.swatch.rgb), top: `${position}%`}}>
           <div className="Labeller-linkLine" />
-        </div>
+        </div> */}
 
         <div className="Labeller-legendLine">
           <div className="Labeller-swatch" style={{ backgroundColor: toRgbCss(label.swatch.rgb)}}></div>
@@ -64,19 +64,35 @@ export class Labeller extends Component  {
     const section = [];
     let offset = 0;
 
-    // const positions = [];
-    // for (let i = 0; i < labels.length; i++) {
-    //   const label = labels[i];
-    //   // position at bottom
-    //   offset += label.weight;
-    //   positions.push(offset);
-    // }
-
+    const positions = [];
     for (let i = 0; i < labels.length; i++) {
       const label = labels[i];
       // position at bottom
-      offset += label.weight;
-      section.push(this.createLabel({ label, id: 'neutral ' + i, position: (offset) / totalWeight * 100, offset: -label.weight }));
+      offset += label.weight / totalWeight * 100;
+      positions.push(offset);
+    }
+    console.log(positions);
+
+    // HACK: in percent, need to work out px
+    const spaceNeeded = 7;
+    for (let i = labels.length - 2; i>=0; i--) {
+      if (positions[i + 1] - positions[i] < spaceNeeded) {
+        positions[i] = positions[i + 1] - spaceNeeded;
+      }
+    }
+    // for (let i = labels.length - 1; i>=0; i--) {
+    //   if (positions[i + 1] - positions[i] < spaceNeeded) {
+    //     positions[i] = positions[i + 1] - spaceNeeded;
+    //   }
+    // }
+    for (let i = 0; i < labels.length; i++) {
+      const label = labels[i];
+      const position = positions[i];
+      const prevPosition = i > 0 ? positions[i-1] : 0;
+      position = prevPosition + (position - prevPosition) / 2;
+      // position at bottom
+      // offset += label.weight;
+      section.push(this.createLabel({ label, id: 'neutral ' + i, position }));
     }
 
     return section;

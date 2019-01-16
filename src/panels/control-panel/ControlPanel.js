@@ -30,7 +30,7 @@ const COMMS = [
     name: 'Emailer', id: 'Emailer',
   },
   {
-    name: 'Billboard & media', id: 'Billboard',
+    name: 'Print media', id: 'Print',
   },
 ];
 

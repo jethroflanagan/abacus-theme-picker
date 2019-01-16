@@ -18,6 +18,7 @@ export const GROUPS = {
   neutrals: { name: 'Neutrals' },
   dusk: { name: 'Dusk' },
   dawn: { name: 'Dawn' },
+  email: { name: 'Email' },
 }
 
 export const NEUTRALS = [
@@ -191,6 +192,76 @@ export let NEUTRALS_WEIGHTS = {
       weight: 6,
     },
   ],
+
+  Emailer: [
+    {
+      swatch: 'White',
+      weight: 76,
+    },
+    {
+      swatch: 'Background-Dark',
+      weight: 100,
+    },
+    {
+      swatch: 'Line-Light',
+      weight: 6,
+    },
+    {
+      swatch: 'Line-Dark',
+      weight: 6,
+    },
+    {
+      swatch: 'Text-Light',
+      weight: 3,
+    },
+    {
+      swatch: 'Text-Mid',
+      weight: 3,
+    },
+    {
+      swatch: 'Text-Dark',
+      weight: 3,
+    },
+    {
+      swatch: 'Text-Darkest',
+      weight: 3,
+    },
+  ],
+
+  Print: [
+    {
+      swatch: 'White',
+      weight: 76,
+    },
+    {
+      swatch: 'Background-Dark',
+      weight: 100,
+    },
+    {
+      swatch: 'Line-Light',
+      weight: 6,
+    },
+    {
+      swatch: 'Line-Dark',
+      weight: 6,
+    },
+    {
+      swatch: 'Text-Light',
+      weight: 3,
+    },
+    {
+      swatch: 'Text-Mid',
+      weight: 3,
+    },
+    {
+      swatch: 'Text-Dark',
+      weight: 3,
+    },
+    {
+      swatch: 'Text-Darkest',
+      weight: 3,
+    },
+  ],
 };
 
 // be deadly and overwrite on the fly with actual swatches, not just names
@@ -232,6 +303,9 @@ export let COLORS = [
   { name: "Calm", color: tinycolor({ r: 135, g: 10, b: 60 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Care', 'Smile', 'Surprise', 'Luxury', 'Depth'] },
   { name: "Luxury", color: tinycolor({ r: 100, g: 0, b: 50 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Care', 'Smile', 'Surprise', 'Calm', 'Depth'] },
   { name: "Depth", color: tinycolor({ r: 80, g: 10, b: 40 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
+
+  { name: "What a Surprise", color: tinycolor({ r: 185, g: 30, b: 95 }), group: 'email', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
+  { name: "No longer Calm", color: tinycolor({ r: 125, g: 12, b: 64 }), group: 'email', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
 ].map(setupColor);
 
 
@@ -250,10 +324,19 @@ export const CALL_TO_ACTION = [
   'Text-Darkest',
 ].map(name => _.find(COLORS, { name }));
 
+export const CALL_TO_ACTION_EMAIL = [
+  'Prepared',
+  'Smile',
+  'Text-Darkest',
+  'What a Surprise',
+  'No longer Calm',
+].map(name => _.find(COLORS, { name }));
+
 export const DAWN_DUSK_GROUPED = {
   dawn: GROUPS.dawn,
   dusk: GROUPS.dusk,
 };
+
 export const DAWN_DUSK = [...DAWN_DUSK_GROUPED.dawn.swatches, ...DAWN_DUSK_GROUPED.dusk.swatches];
 
 export const PREVIEW_WEIGHTS = {

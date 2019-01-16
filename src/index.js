@@ -12,6 +12,7 @@ import {
   NEUTRALS,
   GROUPS,
   CALL_TO_ACTION,
+  CALL_TO_ACTION_EMAIL,
   NEUTRALS_WEIGHTS,
   PALETTE_WEIGHTS,
   DAWN_DUSK,
@@ -103,7 +104,7 @@ class App extends Component {
   render() {
     const { palette, cta, experience, hideFinalPanel } = this.state;
 
-    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim: palette.length > 3 });
+    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: (experience === 'Emailer' ? CALL_TO_ACTION_EMAIL: CALL_TO_ACTION), onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim: palette.length > 3 });
 
     let canAddPanels = false;
     const panels = palette.map((panel, index, list) => {

@@ -1,3 +1,5 @@
+@import "../../../vars";
+
 .Swatch {
   display: flex;
   align-items: center;
@@ -24,6 +26,10 @@
     width: 40px;
     height: 40px;
     border-radius: 3px;
+
+    @media (max-width: $slimBp) {
+      width: 10px;
+    }
     .SwatchPanel--slim & {
       width: 10px;
     }

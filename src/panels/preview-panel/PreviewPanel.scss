@@ -1,4 +1,5 @@
 .PalettePreview {
+  $minHeight: 700px;
   display: flex;
   padding: 20px 0;
   flex-grow: 1;
@@ -10,6 +11,12 @@
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 250px 0 inset rgba(0,0,0,0.2);
+
+  @media (max-height: $minHeight) {
+    position: relative;
+    height: initial;
+  }
+
   &-labels {
     position: absolute;
     width: 100%;
@@ -41,6 +48,12 @@
         margin: 5px;
       }
     }
+    @media (max-height: $minHeight) {
+      max-height: inherit;
+      height: #{$minHeight - 40px};
+      margin-top: 0;
+    }
+
   }
   .PalettePreview-bk {
     display: flex;
