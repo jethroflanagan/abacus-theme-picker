@@ -89,8 +89,8 @@ class App extends Component {
     this.setState({ experience });
   }
 
-  createSwatchPanel({ name, mix, onChanged, isGrouped, swatch, canRemove }) {
-    return <SwatchPanel key={'Swatch ' + name} list={mix} label={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} canRemove={canRemove} removePanel={() => this.removePanel()} />
+  createSwatchPanel({ name, mix, onChanged, isGrouped, swatch, canRemove, isSlim }) {
+    return <SwatchPanel key={'Swatch ' + name} list={mix} label={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} canRemove={canRemove} removePanel={() => this.removePanel()} slim={isSlim} />
   }
 
   removePanel() {
@@ -103,7 +103,7 @@ class App extends Component {
   render() {
     const { palette, cta, experience, hideFinalPanel } = this.state;
 
-    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta });
+    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim: palette.length > 3 });
 
     let canAddPanels = false;
     const panels = palette.map((panel, index, list) => {
@@ -112,7 +112,7 @@ class App extends Component {
       if (index > 0 && index === list.length - 1) {
         canRemove = true;
       }
-      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped, canRemove })
+      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped, canRemove, isSlim: list.length > 3 })
     });
     const numSwatches = palette.filter(item => item.swatch).length;
 

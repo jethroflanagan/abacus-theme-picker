@@ -24,6 +24,9 @@
     width: 40px;
     height: 40px;
     border-radius: 3px;
+    .SwatchPanel--slim & {
+      width: 10px;
+    }
   }
   &-info {
     margin-left: 10px;

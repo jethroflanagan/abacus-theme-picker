@@ -17,8 +17,9 @@ export class SwatchPanel extends Component  {
     super(props);
     this.state = {
       active: props.swatch,
+      isShowing: true,
     }
-  } 
+  }
 
   makeActive(swatch) {
     // const active = (
@@ -31,6 +32,10 @@ export class SwatchPanel extends Component  {
     if (this.props.onActiveChanged) {
       this.props.onActiveChanged(swatch);
     }
+  }
+
+  componentDidMount() {
+    requestAnimationFrame(() => this.setState({ isShowing: false }));
   }
 
   createGroup = (group) => {
@@ -71,7 +76,8 @@ export class SwatchPanel extends Component  {
   }
 
   render() {
-    const { list, grouped, label, canRemove } = this.props;
+    const { list, grouped, label, canRemove, slim } = this.props;
+    const { isShowing } = this.state;
     let content = null;
     if (grouped) {
       content = (
@@ -90,11 +96,11 @@ export class SwatchPanel extends Component  {
     }
     let removeButton = null;
     if (canRemove) {
-      removeButton = <div className="SwatchPanel-remove" ><Button label='Remove colour' type="tertiary" stretch="true" onClick={() => this.removePanel()} /></div>;
+      removeButton = <div className="SwatchPanel-remove" ><Button label='Remove' type="tertiary" stretch="true" onClick={() => this.removePanel()} /></div>;
     }
 
     return (
-      <div className="SwatchPanel">
+      <div className={'SwatchPanel' + (slim ? ' SwatchPanel--slim': '') + (isShowing ? ' SwatchPanel--hidden' : '')}>
         <div className="SwatchPanel-content">
           <MainSwatch swatch={this.state.active} label={label} />
           {content}
