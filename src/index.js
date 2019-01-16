@@ -24,7 +24,7 @@ class App extends Component {
     this.state = {
       primary: null,
       secondary: null,
-      experience: 'TransactionalWeb',
+      experience: 'RetailWeb',
       numTertiary: 1,
       tertiary: [],
       cta: _.find(CALL_TO_ACTION, { name: 'Prepared' }),
@@ -38,6 +38,7 @@ class App extends Component {
         },
       ],
     };
+    document.documentElement.style.setProperty('--primary-color', '#' + this.state.cta.hex);
   }
 
   chooseSwatch(swatch, index) {
@@ -72,10 +73,6 @@ class App extends Component {
         palette.push(current);
       }
     }
-    // if primary, change theme
-    if (index === 0) {
-      document.documentElement.style.setProperty('--primary-color', '#' + swatch.hex);
-    }
 
     // palette = _.map(COLORS, name => _.find(COLORS, { name }))
 
@@ -84,6 +81,8 @@ class App extends Component {
 
   chooseCta(swatch) {
     this.setState({ cta: swatch });
+    // change theme
+    document.documentElement.style.setProperty('--primary-color', '#' + swatch.hex);
   }
 
   changeExperience(experience) {

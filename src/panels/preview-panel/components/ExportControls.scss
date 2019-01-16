@@ -7,7 +7,44 @@
     // right: 20px;
     // bottom: 20px;
     height: 100%;
-    width: 180px;
+    overflow: hidden;
+    transition: all .3s ease-out;
+    padding-right: 0;
+    &--visible {
+      padding-right: 20px;
+    }
+    &-icon {
+      width: 30px;
+      height: 18px;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: transparent;
+      cursor: pointer;
+      &Bar {
+        width: 100%;
+        height: 2px;
+        background: #111;
+      }
+    }
+    &-menu {
+      width: 0;
+      transition: width .3s ease-out;
+      &--visible {
+        width: 180px;
+      }
+    }
+    &-menuContent {
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      padding-top: 50px;
+      height: 100%;
+      align-items: flex-end;
+      }
     &-extra {
       margin-top: auto;
       display: flex;

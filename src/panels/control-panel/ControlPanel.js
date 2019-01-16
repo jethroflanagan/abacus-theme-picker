@@ -4,10 +4,10 @@ import './ControlPanel.scss';
 
 const WEB = [
   {
-    name: 'Transactional', id: 'TransactionalWeb',
+    name: 'Retail', id: 'RetailWeb',
   },
   {
-    name: 'Retail', id: 'RetailWeb',
+    name: 'Transactional', id: 'TransactionalWeb',
   },
   {
     name: 'Tool', id: 'ToolWeb',
@@ -15,10 +15,10 @@ const WEB = [
 ];
 const MOBILE = [
   {
-    name: 'Transactional', id: 'TransactionalMobile',
+    name: 'Retail', id: 'RetailMobile',
   },
   {
-    name: 'Retail', id: 'RetailMobile',
+    name: 'Transactional', id: 'TransactionalMobile',
   },
   {
     name: 'Tool', id: 'ToolMobile',

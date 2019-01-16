@@ -14,10 +14,11 @@ export class PreviewPanel extends Component  {
     this.state = {
       active: null,
       separateColors: false,
+      isMenuVisible: false,
     }
   }
 
-  createSwatch(swatch, { weight = 1, name = '', showLabel = true }) {
+  createSwatch(swatch, { weight = 1 }) {
     const nameStyle = swatch.isDark
     ? {
       color: '#aaa',
@@ -27,10 +28,9 @@ export class PreviewPanel extends Component  {
       color: '#888',
       mixBlendMode: 'multiply',
     }
-    console.log(showLabel);
     return (
       <div className='PalettePreview-swatch' style={{ backgroundColor: toRgbCss(swatch.rgb), flexGrow: weight}} key={swatch.name}>
-        { showLabel ? <div className="PalettePreview-swatchLabel" style={nameStyle}>{name}</div> : null }
+        {/* { showLabel ? <div className="PalettePreview-swatchLabel" style={nameStyle}>{name}</div> : null } */}
       </div>
     )
   }
@@ -63,9 +63,13 @@ export class PreviewPanel extends Component  {
   //   return list;
   // }
 
+  changeMenuVisibility(isMenuVisible) {
+    this.setState({ isMenuVisible });
+  }
+
   render() {
     const { palette, cta, neutrals } = this.props;
-    const { separateColors } = this.state;
+    const { separateColors, isMenuVisible } = this.state;
 
     let ctaItem = null;
     let ctaBackground = null;
@@ -74,6 +78,7 @@ export class PreviewPanel extends Component  {
       ctaBackground = this.createSwatch(cta, ctaConfig);
       ctaItem = this.createSwatch(cta, ctaConfig);
     }
+    console.log(isMenuVisible);
     return (
       <div className="PalettePreview">
         <div className="PalettePreview-bk">
@@ -93,15 +98,17 @@ export class PreviewPanel extends Component  {
             { this.createList(palette) }
           </div>
           <div className="PalettePreview-cardNeutrals" style={{ flexGrow: PREVIEW_WEIGHTS.neutrals }}>
-            { neutrals ? this.createList(neutrals, { showLabel: false }) : null }
+            { neutrals ? this.createList(neutrals) : null }
           </div>
           <div className="PalettePreview-cardCta" style={{ flexGrow: PREVIEW_WEIGHTS.cta }}>
           { ctaItem }
           </div>
-          <Labeller palette={palette} cta={{swatch: cta, ...ctaConfig}} neutrals={neutrals} />
+          <div className={'PalettePreview-labels' + (isMenuVisible ? '' : ' PalettePreview-labels--visible')}>
+            <Labeller palette={palette} cta={{swatch: cta, ...ctaConfig}} neutrals={neutrals} />
+          </div>
         </div>
         <div className="PalettePreview-margin" style={{marginLeft: 'auto'}}>
-          <ExportControls setSeparateColors={val => this.setSeparateColors(val)} />
+          <ExportControls setSeparateColors={val => this.setSeparateColors(val)} changeVisibility={(val) => this.changeMenuVisibility(val)}/>
         </div>
       </div>
     );

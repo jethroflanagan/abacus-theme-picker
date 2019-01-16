@@ -1,11 +1,8 @@
 .Labeller {
-  position: absolute;
-  width: 100%;
-  transform: translate(100%);
-  margin-left: 5px;
   display: flex;
   flex-direction: column;
   height: 100%;
+
   &-section {
     position: relative;
     flex-grow: 1;
