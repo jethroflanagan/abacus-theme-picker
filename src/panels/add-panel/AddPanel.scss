@@ -20,7 +20,9 @@
     padding: 10px;
     width: 50px;
     height: 100vh;
+    position: -webkit-sticky;
     position: sticky;
+    will-change: transform;
     top: 0;
     background: #524a4a;
     transition: background .3s ease-out;

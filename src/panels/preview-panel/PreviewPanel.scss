@@ -5,7 +5,9 @@
   flex-grow: 1;
   height: 100vh;
   min-width: 200px;
+  position: -webkit-sticky;
   position: sticky;
+  will-change: transform;
   top: 0;
   overflow: hidden;
   justify-content: center;
@@ -15,6 +17,7 @@
   @media (max-height: $minHeight) {
     position: relative;
     height: initial;
+    will-change: initial;
   }
 
   &-labels {
@@ -156,6 +159,7 @@
 
 .PaddingToggle {
   position: absolute;
+  z-index: 1;
   left: 20px;
   top: 20px;
   width: 40px;
