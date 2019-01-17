@@ -304,8 +304,8 @@ export let COLORS = [
   { name: "Luxury", color: tinycolor({ r: 100, g: 0, b: 50 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Care', 'Smile', 'Surprise', 'Calm', 'Depth'] },
   { name: "Depth", color: tinycolor({ r: 80, g: 10, b: 40 }), group: 'dusk', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
 
-  { name: "What a Surprise", color: tinycolor({ r: 185, g: 30, b: 95 }), group: 'email', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
-  { name: "No longer Calm", color: tinycolor({ r: 125, g: 12, b: 64 }), group: 'email', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
+  // { name: "What a Surprise", color: tinycolor({ r: 185, g: 30, b: 95 }), group: 'email', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
+  // { name: "No longer Calm", color: tinycolor({ r: 125, g: 12, b: 64 }), group: 'email', mix: ['Energy', 'Prepared', 'Agile', 'Passion', 'Warmth', 'Human', 'Grounded', 'Care', 'Smile', 'Surprise', 'Calm', 'Luxury'] },
 ].map(setupColor);
 
 
@@ -328,8 +328,8 @@ export const CALL_TO_ACTION_EMAIL = [
   'Prepared',
   'Smile',
   'Text-Darkest',
-  'What a Surprise',
-  'No longer Calm',
+  // 'What a Surprise',
+  // 'No longer Calm',
 ].map(name => _.find(COLORS, { name }));
 
 export const DAWN_DUSK_GROUPED = {

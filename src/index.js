@@ -110,7 +110,7 @@ class App extends Component {
   render() {
     const { palette, cta, experience, hideFinalPanel } = this.state;
     const isSlim = palette.length - (hideFinalPanel ? 1 : 0) > 3;
-    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: (experience === 'Emailer' ? CALL_TO_ACTION_EMAIL: CALL_TO_ACTION), onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim });
+    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim });
 
     let canAddPanels = false;
     const panels = palette.map((panel, index, list) => {
