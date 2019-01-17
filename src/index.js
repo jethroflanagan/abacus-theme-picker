@@ -47,7 +47,14 @@ class App extends Component {
     let palette = [...this.state.palette];
 
     // remove following panels
+    const paletteLength = palette.length;
+
     palette.length = Math.min(palette.length, index + 1);
+    const lastPanel = palette.slice(-1)[0];
+    if (lastPanel && lastPanel.swatch) {
+      palette[palette.length - 1].swatch = null;
+    }
+
     let current = palette[index];
     const currentMix = palette.length === 1 ? DAWN_DUSK : current.mix;
     const swatchMix = swatch.mix.filter(name => _.find(currentMix, { name }));
@@ -55,29 +62,28 @@ class App extends Component {
     const mix = swatchMix.map((name) => _.find(DAWN_DUSK, { name }));
 
     // handle deselect
-    if (current.name === swatch.name) {
-      palette.pop();
-    }
-    else {
-      current.swatch = swatch;
-      let name = index < paletteNames.length ? paletteNames[index] : paletteNames.slice(-1)[0];
-      name = name.replace('{{index}}', palette.length - paletteNames.length + 1);
-      current = {
-        name,
-        isGrouped: false,
-        // convert to swatches
-        mix,
-        swatch: null,
-      };
+    // if (current.name === swatch.name) {
+    //   palette.pop();
+    // }
+    // else {
+    current.swatch = swatch;
+    let name = index < paletteNames.length ? paletteNames[index] : paletteNames.slice(-1)[0];
+    name = name.replace('{{index}}', palette.length - paletteNames.length + 1);
+    current = {
+      name,
+      isGrouped: false,
+      // convert to swatches
+      mix,
+      swatch: null,
+    };
 
-      if (palette.length < 5 && mix.length) {
-        palette.push(current);
-      }
+    if (palette.length < 5 && mix.length) {
+      palette.push(current);
     }
+    // }
 
     // palette = _.map(COLORS, name => _.find(COLORS, { name }))
-
-    this.setState({ palette });
+    this.setState({ palette, hideFinalPanel: paletteLength > palette.length });
   }
 
   chooseCta(swatch) {
