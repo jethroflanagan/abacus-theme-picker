@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Swatch from './components/Swatch';
 import MainSwatch from './components/MainSwatch';
-import { Button } from '../../components/Button';
+import { Button } from 'src/components/button/Button';
 
 import './SwatchPanel.scss';
 

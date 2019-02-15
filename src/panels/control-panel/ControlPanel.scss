@@ -1,19 +1,19 @@
+@import 'src/vars';
+
 .ControlPanel {
-  background: #524a4a;
+  background: $color-text-dark;
   width: 200px;
   min-height: 100vh;
   color: #eee;
   &-title {
     padding: 10px 20px;
     font-size: 14px;
-    margin-top: 20px;
+    margin-top: 40px;
     color: #fff;
     font-weight: bold;
   }
   &-experience {
-    padding: 20px;
-    background: rgba(0,0,0,.1);
-    border-bottom: 1px solid rgba(0,0,0,.2);
+    padding: 10px 20px;
     color: #aaa;
     cursor: pointer;
     &--active {
@@ -21,7 +21,6 @@
       color: #fff;
     }
     &:first-child {
-      border-top: 1px solid rgba(0,0,0,.2);
     }
   }
 }

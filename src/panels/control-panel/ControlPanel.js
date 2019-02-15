@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import './ControlPanel.scss';
+import { Logo } from 'src/components/logo/Logo';
 
 const WEB = [
   {
@@ -25,14 +26,14 @@ const MOBILE = [
   },
 ];
 
-const COMMS = [
-  {
-    name: 'Emailer', id: 'Emailer',
-  },
-  {
-    name: 'Print media', id: 'Print',
-  },
-];
+// const COMMS = [
+//   {
+//     name: 'Emailer', id: 'Emailer',
+//   },
+//   {
+//     name: 'Print media', id: 'Print',
+//   },
+// ];
 
 export class ControlPanel extends Component  {
 
@@ -56,6 +57,7 @@ export class ControlPanel extends Component  {
   render() {
     return (
       <div className="ControlPanel">
+        <Logo />
         <div className="ControlPanel-title">Web</div>
         <div>
           { _.map(WEB, item => this.createMenuItem(item)) }
@@ -64,10 +66,10 @@ export class ControlPanel extends Component  {
         <div>
           { _.map(MOBILE, item => this.createMenuItem(item)) }
         </div>
-        <div className="ControlPanel-title">Communication</div>
+        {/* <div className="ControlPanel-title">Communication</div>
         <div>
           { _.map(COMMS, item => this.createMenuItem(item)) }
-        </div>
+        </div> */}
       </div>
     );
   }

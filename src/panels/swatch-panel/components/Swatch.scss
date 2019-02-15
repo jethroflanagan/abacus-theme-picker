@@ -1,11 +1,12 @@
-@import "../../../vars";
+@import "src/vars";
 
 .Swatch {
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
-  &:before {
+
+  &:after {
     content: '';
     display: block;
     position: absolute;
@@ -16,7 +17,7 @@
     background: rgba(255, 255, 255, 0);
     transition: background .3s ease-out;
   }
-  &--inactive:before {
+  &--inactive:after {
     background: rgba(255,255,255,.7);
   }
   &:not(:last-child) {
@@ -38,11 +39,17 @@
     margin-left: 10px;
   }
   &-label {
-    color: #333;
+    color: $color-text-darkest;
   }
   &-hex {
     color: #777;
     text-transform: uppercase;
     font-size: 12px;
+  }
+  &:hover &:after {
+    opacity: 0;
+  }
+  &:hover &-block {
+    transform: scale(1.1);
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Button } from '../../../components/Button';
+import { Button } from 'src/components/button/Button';
 
 import './ExportControls.scss';
 

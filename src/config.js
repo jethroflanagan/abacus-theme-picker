@@ -321,13 +321,11 @@ COLORS.forEach((color) => {
 export const CALL_TO_ACTION = [
   'Prepared',
   'Smile',
-  'Text-Darkest',
 ].map(name => _.find(COLORS, { name }));
 
 export const CALL_TO_ACTION_EMAIL = [
   'Prepared',
   'Smile',
-  'Text-Darkest',
   // 'What a Surprise',
   // 'No longer Calm',
 ].map(name => _.find(COLORS, { name }));

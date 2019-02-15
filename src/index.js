@@ -1,23 +1,13 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import './style.scss';
-import _ from 'lodash';
-import { SwatchPanel } from './panels/swatch-panel/SwatchPanel';
-import { PreviewPanel } from './panels/preview-panel/PreviewPanel';
-import { ControlPanel } from './panels/control-panel/ControlPanel';
+import { CALL_TO_ACTION, DAWN_DUSK, DAWN_DUSK_GROUPED, NEUTRALS_WEIGHTS, PALETTE_WEIGHTS, GROUPS } from './config';
 import { AddPanel } from './panels/add-panel/AddPanel';
+import { ControlPanel } from './panels/control-panel/ControlPanel';
+import { PreviewPanel } from './panels/preview-panel/PreviewPanel';
+import { SwatchPanel } from './panels/swatch-panel/SwatchPanel';
+import './style.scss';
 
-import {
-  COLORS,
-  NEUTRALS,
-  GROUPS,
-  CALL_TO_ACTION,
-  CALL_TO_ACTION_EMAIL,
-  NEUTRALS_WEIGHTS,
-  PALETTE_WEIGHTS,
-  DAWN_DUSK,
-  DAWN_DUSK_GROUPED
-} from './config';
 
 class App extends Component {
   constructor() {
@@ -28,7 +18,7 @@ class App extends Component {
       experience: 'RetailWeb',
       numTertiary: 1,
       tertiary: [],
-      cta: _.find(CALL_TO_ACTION, { name: 'Prepared' }),
+      cta: null,
       hideFinalPanel: false,
       palette: [
         {
@@ -39,7 +29,7 @@ class App extends Component {
         },
       ],
     };
-    document.documentElement.style.setProperty('--primary-color', '#' + this.state.cta.hex);
+    // document.documentElement.style.setProperty('--primary-color', '#' + this.state.cta.hex);
   }
 
   chooseSwatch(swatch, index) {
@@ -88,6 +78,25 @@ class App extends Component {
 
   chooseCta(swatch) {
     this.setState({ cta: swatch });
+
+    let mix = [];
+    switch (swatch.name) {
+      case 'Prepared':
+        mix = GROUPS.dusk.swatches;
+        break;
+      case 'Smile':
+        mix = GROUPS.dawn.swatches;
+    }
+    // reset palette for primary to opposite of cta
+    this.setState({
+      palette: [{
+        name: 'Primary',
+        mix,
+        swatch: null,
+        isGrouped: false,
+      }]
+    });
+
     // change theme
     document.documentElement.style.setProperty('--primary-color', '#' + swatch.hex);
   }
