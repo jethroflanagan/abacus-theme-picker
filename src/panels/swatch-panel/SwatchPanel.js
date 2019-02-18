@@ -62,11 +62,17 @@ export class SwatchPanel extends Component  {
   }
 
   componentWillReceiveProps(props) {
-    if (!props.list || !Array.isArray(props.list) || !Array.isArray(this.props.list)) return;
+    if (!props.list || !Array.isArray(props.list) || !Array.isArray(this.props.list)) {
+      return;
+    }
+    console.log('props return', props);
     const nextList = props.list.map(swatch => swatch.name).join(',');
     const list = this.props.list.map(swatch => swatch.name).join(',');
 
-    if (nextList != list) {
+    if (props.swatch) {
+      this.setState({ active: props.swatch });
+    }
+    else if (nextList != list) {
       this.setState({ active: null });
     }
   }

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { CALL_TO_ACTION, DAWN_DUSK, DAWN_DUSK_GROUPED, NEUTRALS_WEIGHTS, PALETTE_WEIGHTS, GROUPS } from './config';
+import { COLORS, CALL_TO_ACTION, DAWN_DUSK, DAWN_DUSK_GROUPED, NEUTRALS_WEIGHTS, PALETTE_WEIGHTS, GROUPS } from './config';
 import { AddPanel } from './panels/add-panel/AddPanel';
 import { ControlPanel } from './panels/control-panel/ControlPanel';
 import { PreviewPanel } from './panels/preview-panel/PreviewPanel';
@@ -72,8 +72,22 @@ class App extends Component {
     }
     // }
 
+    // Primary choice affects CTA
+    let cta = this.state.cta;
+    if (index === 0) {
+      const result = this.getCtaFromPrimary(swatch);
+      palette[0].isGrouped = false;
+      // // palette[0].swatch = swatch;
+      palette[0].mix = result.mix;
+      cta = result.cta;
+      // this.chooseCta(cta);
+    }
     // palette = _.map(COLORS, name => _.find(COLORS, { name }))
-    this.setState({ palette, hideFinalPanel: paletteLength > palette.length });
+    this.setState({ palette, hideFinalPanel: paletteLength > palette.length, cta }, () => {
+      if (cta) {
+        this.setPageThemeAsCta();
+      }
+    });
   }
 
   chooseCta(swatch) {
@@ -87,6 +101,7 @@ class App extends Component {
       case 'Smile':
         mix = GROUPS.dawn.swatches;
     }
+
     // reset palette for primary to opposite of cta
     this.setState({
       palette: [{
@@ -95,10 +110,30 @@ class App extends Component {
         swatch: null,
         isGrouped: false,
       }]
+    }, () => {
+      this.setPageThemeAsCta();
     });
+  }
 
-    // change theme
-    document.documentElement.style.setProperty('--primary-color', '#' + swatch.hex);
+  getCtaFromPrimary(primary) {
+    let ctaName;
+    let mix;
+    if (_.find(GROUPS.dusk.swatches, { name: primary.name })) {
+      ctaName = 'Prepared';
+      mix = GROUPS.dusk.swatches;
+    }
+    else {
+      ctaName = 'Smile';
+      mix = GROUPS.dawn.swatches;
+    }
+    return {
+      cta: _.find(CALL_TO_ACTION, { name: ctaName }),
+      mix,
+    };
+  }
+
+  setPageThemeAsCta() {
+    document.documentElement.style.setProperty('--primary-color', '#' + this.state.cta.hex);
   }
 
   changeExperience(experience) {

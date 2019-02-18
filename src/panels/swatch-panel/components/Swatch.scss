@@ -10,12 +10,15 @@
     content: '';
     display: block;
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
+
+    // move edges so it accounts for swatch growth on hover
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    top: -5px;
+
     background: rgba(255, 255, 255, 0);
-    transition: background .3s ease-out;
+    transition: background $ease;
   }
   &--inactive:after {
     background: rgba(255,255,255,.7);
@@ -27,6 +30,7 @@
     width: 40px;
     height: 40px;
     border-radius: 3px;
+    transition: transform .1s ease-out;
 
     @media (max-width: $slimBp) {
       width: 10px;
@@ -46,10 +50,12 @@
     text-transform: uppercase;
     font-size: 12px;
   }
-  &:hover &:after {
+  &:hover:after {
     opacity: 0;
+    background: rgba(255,255,255,.1);
   }
   &:hover &-block {
     transform: scale(1.1);
   }
+
 }
