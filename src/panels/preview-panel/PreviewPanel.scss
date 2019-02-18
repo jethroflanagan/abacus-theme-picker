@@ -1,3 +1,5 @@
+@import "src/vars";
+
 .PalettePreview {
   $minHeight: 700px;
   display: flex;
@@ -22,13 +24,20 @@
 
   &-labels {
     position: absolute;
+
+    // prevent jumping labels on showing the gap
+    top: 0;
+    left: 0;
+
+    opacity: 0;
     width: 100%;
     margin-left: 5px;
     height: 100%;
     z-index: -1;
     transform: translateX(0);
-    transition: transform .3s ease-out;
+    transition: transform $ease, opacity $ease;
     &--visible {
+      opacity: 1;
       transform: translate(100%);
     }
   }
@@ -78,6 +87,7 @@
     display: flex;
     align-items:flex-end;
     transition: margin .1s ease-out;
+
     // &:first-child {
     //   border-radius: 3px 3px 0 0;
     // }
@@ -161,7 +171,7 @@
   position: absolute;
   z-index: 1;
   left: 20px;
-  top: 20px;
+  bottom: 20px;
   width: 40px;
   height: 40px;
   background: #fff;
@@ -188,7 +198,8 @@
   }
   &-label {
     position: absolute;
-    left: 45px;
+    left: 0px;
+    bottom: 50px;
     white-space: nowrap;
     visibility: hidden;
     // background: #ccc;
@@ -197,4 +208,29 @@
   &:hover &-label {
     visibility: visible;
   }
+}
+
+.PalettePreview-logo {
+  position: absolute;
+  top: 0;
+  left: 10px;
+}
+
+.FullModeToggle {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 70px;
+  bottom: 20px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2px;
+  cursor: pointer;
 }

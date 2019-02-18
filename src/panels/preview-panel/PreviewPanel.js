@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { ExportControls } from './components/ExportControls';
 import { Labeller } from './components/Labeller';
+import { Logo } from 'src/components/logo/Logo';
 
 import { toRgbCss } from '../../utils/helpers';
 import { PREVIEW_WEIGHTS } from '../../config';
@@ -69,8 +70,12 @@ export class PreviewPanel extends Component  {
     this.setState({ isMenuVisible });
   }
 
+  toggleFullMode() {
+    this.props.toggleFullMode();
+  }
+
   render() {
-    const { palette, cta, neutrals } = this.props;
+    const { palette, cta, neutrals, isFullMode } = this.props;
     const { separateColors, isMenuVisible } = this.state;
 
     let ctaItem = null;
@@ -82,6 +87,9 @@ export class PreviewPanel extends Component  {
     }
     return (
       <div className="PalettePreview">
+        {isFullMode ? <div className="PalettePreview-logo"><Logo /></div> : null }
+
+        <div className={`FullModeToggle`} onClick={() => this.toggleFullMode()}>👓</div>
         <div className={`PaddingToggle ${separateColors ? ' PaddingToggle--gap': ''}`} onClick={() => this.setSeparateColors(!separateColors)}>
           <div className="PaddingToggle-pane"/>
           <div className="PaddingToggle-pane"/>

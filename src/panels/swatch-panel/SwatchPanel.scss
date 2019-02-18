@@ -27,6 +27,8 @@
     100% { width: 140px }
   }
   &-content {
+    display: flex;
+    flex-direction: column;
     padding: 20px;
     position: relative;
     background: #fff;
@@ -42,6 +44,16 @@
 
   &-remove {
     margin-top: 40px;
+  }
+  &-controls {
+    display: flex;
+    margin-top: auto;
+    justify-content: center;
+    & > * {
+      &:not(:first-child) {
+        margin-left: 10px;
+      }
+    }
   }
 }
 .SwatchGroup {

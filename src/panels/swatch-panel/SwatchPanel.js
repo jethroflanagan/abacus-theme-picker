@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Swatch from './components/Swatch';
 import MainSwatch from './components/MainSwatch';
-import { Button } from 'src/components/button/Button';
+import EmptySwatchHeader from './components/EmptySwatchHeader';
+import TrashButton from './components/TrashButton';
+import AddPanelButton from './components/AddPanelButton';
 
 import './SwatchPanel.scss';
 
@@ -86,7 +88,7 @@ export class SwatchPanel extends Component  {
 
   render() {
     const { list, grouped, label, canRemove, slim, showNextPanel } = this.props;
-    const { isShowing } = this.state;
+    const { isShowing, active } = this.state;
     let content = null;
     if (grouped) {
       content = (
@@ -103,23 +105,32 @@ export class SwatchPanel extends Component  {
         </div>
       );
     }
-    let hideButton = null;
-    let showButton = null;
+    let trashButton = null;
+    let addPanelButton = null;
+
     if (canRemove) {
-      hideButton = <div className="SwatchPanel-remove" ><Button label='Hide panel' type="tertiary" stretch="true" onClick={() => this.removePanel()} /></div>;
+      trashButton = <TrashButton onClick={() => this.removePanel()} />;
     }
-    else if (showNextPanel) {
-      showButton = <div className="SwatchPanel-remove" ><Button label='Show next' type="tertiary" stretch="true" onClick={() => this.showNextPanel()} /></div>;
-      console.log('HELLO');
+
+    if (showNextPanel) {
+      addPanelButton = <AddPanelButton onClick={() => this.showNextPanel()} />;
     }
+
+    // swap to "plus" header for panels where colour is chosen
+    const header = (!active
+      ? <EmptySwatchHeader />
+      : <MainSwatch swatch={active} label={label} />
+    );
 
     return (
       <div className={'SwatchPanel' + (slim ? ' SwatchPanel--slim': '') + (isShowing ? ' SwatchPanel--hidden' : '')}>
         <div className="SwatchPanel-content">
-          <MainSwatch swatch={this.state.active} label={label} />
+          {header}
           {content}
-          {hideButton}
-          {showButton}
+          <div className="SwatchPanel-controls">
+            {trashButton}
+            {addPanelButton}
+          </div>
         </div>
       </div>
     );

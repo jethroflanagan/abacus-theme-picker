@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 import { COLORS, CALL_TO_ACTION, DAWN_DUSK, DAWN_DUSK_GROUPED, NEUTRALS_WEIGHTS, PALETTE_WEIGHTS, GROUPS } from './config';
 import { AddPanel } from './panels/add-panel/AddPanel';
@@ -20,6 +20,7 @@ class App extends Component {
       tertiary: [],
       cta: null,
       isLastPanelHidden: false,
+      isFullMode: true,
       palette: [
         {
           name: 'Primary',
@@ -152,8 +153,12 @@ class App extends Component {
     this.setState({ isLastPanelHidden: false });
   }
 
+  toggleFullMode () {
+    this.setState({ isFullMode: !this.state.isFullMode });
+  }
+
   render() {
-    const { palette, cta, experience, isLastPanelHidden } = this.state;
+    const { palette, cta, experience, isLastPanelHidden, isFullMode } = this.state;
     const isSlim = palette.length + (isLastPanelHidden ? -1 : 0) > 3;
     const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim });
 
@@ -190,13 +195,22 @@ class App extends Component {
       weight: neutrals[i].weight,
     }));
 
-    // const neutralList = _.map(neutrals, name => _.find(COLORS, { name }));
-    return (
-      <div className="App">
+    const classNames = !cta ? 'App--no-primary' : '';
+
+    const content = (!isFullMode ?
+      <Fragment>
         <ControlPanel onChange={name => this.changeExperience(name)} experience={experience} />
         {ctaPanel}
         {panels}
-        <PreviewPanel palette={weightedPalette} neutrals={weightedNeutrals} cta={cta} />
+      </Fragment>
+      : null
+    );
+
+    // const neutralList = _.map(neutrals, name => _.find(COLORS, { name }));
+    return (
+      <div className={`App ${classNames}`}>
+        {content}
+        <PreviewPanel palette={weightedPalette} neutrals={weightedNeutrals} cta={cta} toggleFullMode={()=>this.toggleFullMode()} isFullMode={isFullMode} />
       </div>
     );
   }

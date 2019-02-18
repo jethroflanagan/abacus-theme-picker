@@ -1,0 +1,18 @@
+@import "src/vars";
+
+.TrashButton {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  display: flex;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  color: $color-text-dark;
+  background: $color-background-dark;
+  transition: background $ease;
+  &:hover {
+    background: var(--primary-color);
+  }
+}
