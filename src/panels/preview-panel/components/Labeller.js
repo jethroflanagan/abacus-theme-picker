@@ -71,7 +71,6 @@ export class Labeller extends Component  {
       offset += label.weight / totalWeight * 100;
       positions.push(offset);
     }
-    console.log(positions);
 
     // HACK: in percent, need to work out px
     const spaceNeeded = 7;

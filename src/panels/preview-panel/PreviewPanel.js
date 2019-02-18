@@ -47,7 +47,6 @@ export class PreviewPanel extends Component  {
       if (!weight) weight = 0;
       return this.createSwatch(swatch, { ...options, weight, name });
     }).filter(item => item); // remove null
-    console.log('palette', list);
     if (list.length === 0) {
       return <div className='PalettePreview-swatchPlaceholder' key='placeholder' />
     }

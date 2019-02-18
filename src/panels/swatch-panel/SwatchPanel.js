@@ -65,7 +65,6 @@ export class SwatchPanel extends Component  {
     if (!props.list || !Array.isArray(props.list) || !Array.isArray(this.props.list)) {
       return;
     }
-    console.log('props return', props);
     const nextList = props.list.map(swatch => swatch.name).join(',');
     const list = this.props.list.map(swatch => swatch.name).join(',');
 
@@ -81,8 +80,12 @@ export class SwatchPanel extends Component  {
     this.props.removePanel();
   }
 
+  showNextPanel() {
+    this.props.showNextPanel();
+  }
+
   render() {
-    const { list, grouped, label, canRemove, slim } = this.props;
+    const { list, grouped, label, canRemove, slim, showNextPanel } = this.props;
     const { isShowing } = this.state;
     let content = null;
     if (grouped) {
@@ -100,9 +103,14 @@ export class SwatchPanel extends Component  {
         </div>
       );
     }
-    let removeButton = null;
+    let hideButton = null;
+    let showButton = null;
     if (canRemove) {
-      removeButton = <div className="SwatchPanel-remove" ><Button label='Remove' type="tertiary" stretch="true" onClick={() => this.removePanel()} /></div>;
+      hideButton = <div className="SwatchPanel-remove" ><Button label='Hide panel' type="tertiary" stretch="true" onClick={() => this.removePanel()} /></div>;
+    }
+    else if (showNextPanel) {
+      showButton = <div className="SwatchPanel-remove" ><Button label='Show next' type="tertiary" stretch="true" onClick={() => this.showNextPanel()} /></div>;
+      console.log('HELLO');
     }
 
     return (
@@ -110,7 +118,8 @@ export class SwatchPanel extends Component  {
         <div className="SwatchPanel-content">
           <MainSwatch swatch={this.state.active} label={label} />
           {content}
-          {removeButton}
+          {hideButton}
+          {showButton}
         </div>
       </div>
     );
