@@ -79,6 +79,9 @@ export class PreviewPanel extends Component  {
     const appEl = document.querySelector('.App');
     appEl.classList.add('App--print');
 
+    // allow people to read message
+    await new Promise(resolve => setTimeout(() => resolve(), 300))
+
     await downloadImage({ el, filename: 'chroma-palette' });
 
     appEl.classList.remove('App--print');
