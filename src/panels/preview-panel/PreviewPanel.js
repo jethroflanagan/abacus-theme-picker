@@ -85,6 +85,10 @@ export class PreviewPanel extends Component  {
     await downloadImage({ el, filename: 'chroma-palette' });
 
     appEl.classList.remove('App--print');
+    // appEl.classList.add('App--print-settle');
+    // setTimeout(() => {
+    //   appEl.classList.remove('App--print-settle');
+    // }, 3000);
   }
 
   render() {

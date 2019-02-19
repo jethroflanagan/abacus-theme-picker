@@ -283,7 +283,7 @@
     transform: translate(100%);
   }
 
-  .App--print &:after {
+  .App--print &:after, .App--print-settle &:after {
     display: flex;
     content: 'Saving';
     position: absolute;
