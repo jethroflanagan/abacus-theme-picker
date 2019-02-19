@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { ExportControls } from './components/ExportControls';
 import { Labeller } from './components/Labeller';
 import { Logo } from 'src/components/logo/Logo';
-
+import { downloadImage } from 'src/utils/export';
 import { toRgbCss } from '../../utils/helpers';
 import { PREVIEW_WEIGHTS } from '../../config';
 import './PreviewPanel.scss';
@@ -74,6 +74,16 @@ export class PreviewPanel extends Component  {
     this.props.toggleFullMode();
   }
 
+  async getImageData(el) {
+    // HACK: add print mode without re-rendering react
+    const appEl = document.querySelector('.App');
+    appEl.classList.add('App--print');
+
+    await downloadImage({ el, filename: 'chroma-palette' });
+
+    appEl.classList.remove('App--print');
+  }
+
   render() {
     const { palette, cta, neutrals, isFullMode, isSlim } = this.props;
     const { separateColors, isMenuVisible } = this.state;
@@ -85,8 +95,11 @@ export class PreviewPanel extends Component  {
       ctaBackground = this.createSwatch(cta, ctaConfig);
       ctaItem = this.createSwatch(cta, ctaConfig);
     }
+
     return (
       <div className="PalettePreview">
+        {/* <button onClick={() => this.getImageData(this.refs.previewEl)} download="chroma-palette.png">DOWN</button> */}
+
         {isFullMode ? <div className="PalettePreview-logo"><Logo /></div> : null }
         <div className={`FullModeToggle`} onClick={() => this.toggleFullMode()}>👓</div>
         <div className={`PaddingToggle ${separateColors ? ' PaddingToggle--gap': ''}`} onClick={() => this.setSeparateColors(!separateColors)}>
@@ -107,21 +120,25 @@ export class PreviewPanel extends Component  {
           </div>
         </div>
         <div className="PalettePreview-margin" style={{marginRight: 'auto'}} />
-        <div className={`PalettePreview-card ${separateColors ? ' PalettePreview-card--padded' : ''} ${isSlim && !isFullMode ? 'PalettePreview-card--slim' : ''}`}>
-          <div className="PalettePreview-cardColors" style={{ flexGrow: PREVIEW_WEIGHTS.palette }}>
-            { this.createList(palette) }
-          </div>
-          <div className="PalettePreview-cardNeutrals" style={{ flexGrow: PREVIEW_WEIGHTS.neutrals }}>
-            { neutrals ? this.createList(neutrals) : null }
-          </div>
-          <div className="PalettePreview-cardCta" style={{ flexGrow: PREVIEW_WEIGHTS.cta }}>
-          { ctaItem }
-          </div>
-          <div className={'PalettePreview-labels' + (isMenuVisible ? '' : ' PalettePreview-labels--visible')}>
-            <Labeller palette={palette} cta={{swatch: cta, ...ctaConfig}} neutrals={neutrals} />
+
+        <div ref="previewEl" className="PalettePreview-image">
+          <div className="PalettePreview-logo PalettePreview-logo--image"><Logo /></div>
+          <div  className={`PalettePreview-card ${separateColors ? ' PalettePreview-card--padded' : ''} ${isSlim && !isFullMode ? 'PalettePreview-card--slim' : ''}`}>
+            <div className="PalettePreview-cardColors" style={{ flexGrow: PREVIEW_WEIGHTS.palette }}>
+              { this.createList(palette) }
+            </div>
+            <div className="PalettePreview-cardNeutrals" style={{ flexGrow: PREVIEW_WEIGHTS.neutrals }}>
+              { neutrals ? this.createList(neutrals) : null }
+            </div>
+            <div className="PalettePreview-cardCta" style={{ flexGrow: PREVIEW_WEIGHTS.cta }}>
+            { ctaItem }
+            </div>
+            <div className={'PalettePreview-labels' + (isMenuVisible ? '' : ' PalettePreview-labels--visible')}>
+              <Labeller palette={palette} cta={{swatch: cta, ...ctaConfig}} neutrals={neutrals} />
+            </div>
           </div>
         </div>
-        <ExportControls setSeparateColors={val => this.setSeparateColors(val)} changeVisibility={(val) => this.changeMenuVisibility(val)}/>
+        <ExportControls setSeparateColors={val => this.setSeparateColors(val)} changeVisibility={(val) => this.changeMenuVisibility(val)} exportImage={() => this.getImageData(this.refs.previewEl)} />
         <div className="PalettePreview-margin" style={{marginLeft: 'auto', width: '200px'}}>
         </div>
       </div>

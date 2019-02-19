@@ -17,6 +17,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "dom-to-image": "^2.6.0",
+    "file-saver": "^2.0.1",
     "react-scripts": "latest"
   },
   "browserslist": [

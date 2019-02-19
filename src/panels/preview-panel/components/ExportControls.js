@@ -19,6 +19,12 @@ export class ExportControls extends Component  {
     this.props.setSeparateColors(separateColors);
   }
 
+  exportImage() {
+    if (this.props.exportImage) {
+      this.props.exportImage();
+    }
+  }
+
   toggleVisible() {
     const isVisible = !this.state.isVisible;
     this.setState({ isVisible });
@@ -46,7 +52,8 @@ export class ExportControls extends Component  {
 
             <div className="ExportControls-extra">
               <Button label={separateColors ? 'Juxtapose palette' : 'Separate palette'} type="tertiary" onClick={() => this.toggleSeparateColors()}/>
-              <Button label="Make recommendation" type="primary" hint='Will reconfigure colours for a better architecture experience' />
+              {/* <Button label="Make recommendation" type="primary" hint='Will reconfigure colours for a better architecture experience' /> */}
+              <Button label="Export as Image" type="primary" onClick={() => this.exportImage()} />
             </div>
           </div>
         </div>

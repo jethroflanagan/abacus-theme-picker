@@ -152,6 +152,9 @@ input[type=number] {
         width: 0;
       }
     }
+    .App--print &{
+        width: 0;
+    }
   }
 }
 
