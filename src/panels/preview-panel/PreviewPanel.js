@@ -75,7 +75,7 @@ export class PreviewPanel extends Component  {
   }
 
   render() {
-    const { palette, cta, neutrals, isFullMode } = this.props;
+    const { palette, cta, neutrals, isFullMode, isSlim } = this.props;
     const { separateColors, isMenuVisible } = this.state;
 
     let ctaItem = null;
@@ -88,7 +88,6 @@ export class PreviewPanel extends Component  {
     return (
       <div className="PalettePreview">
         {isFullMode ? <div className="PalettePreview-logo"><Logo /></div> : null }
-
         <div className={`FullModeToggle`} onClick={() => this.toggleFullMode()}>👓</div>
         <div className={`PaddingToggle ${separateColors ? ' PaddingToggle--gap': ''}`} onClick={() => this.setSeparateColors(!separateColors)}>
           <div className="PaddingToggle-pane"/>
@@ -108,7 +107,7 @@ export class PreviewPanel extends Component  {
           </div>
         </div>
         <div className="PalettePreview-margin" style={{marginRight: 'auto'}} />
-        <div className={'PalettePreview-card' + (separateColors ? ' PalettePreview-card--padded' : '')}>
+        <div className={`PalettePreview-card ${separateColors ? ' PalettePreview-card--padded' : ''} ${isSlim && !isFullMode ? 'PalettePreview-card--slim' : ''}`}>
           <div className="PalettePreview-cardColors" style={{ flexGrow: PREVIEW_WEIGHTS.palette }}>
             { this.createList(palette) }
           </div>

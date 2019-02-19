@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
-import { COLORS, CALL_TO_ACTION, DAWN_DUSK, DAWN_DUSK_GROUPED, NEUTRALS_WEIGHTS, PALETTE_WEIGHTS, GROUPS } from './config';
-import { AddPanel } from './panels/add-panel/AddPanel';
+import { CALL_TO_ACTION, DAWN_DUSK, DAWN_DUSK_GROUPED, GROUPS, NEUTRALS_WEIGHTS, PALETTE_WEIGHTS } from './config';
 import { ControlPanel } from './panels/control-panel/ControlPanel';
 import { PreviewPanel } from './panels/preview-panel/PreviewPanel';
 import { SwatchPanel } from './panels/swatch-panel/SwatchPanel';
@@ -20,7 +19,7 @@ class App extends Component {
       tertiary: [],
       cta: null,
       isLastPanelHidden: false,
-      isFullMode: true,
+      isFullMode: false,
       palette: [
         {
           name: 'Primary',
@@ -30,15 +29,11 @@ class App extends Component {
         },
       ],
     };
-    // document.documentElement.style.setProperty('--primary-color', '#' + this.state.cta.hex);
   }
 
   chooseSwatch(swatch, index) {
     const paletteNames = ['Secondary', 'Colour {{index}}'];
     let palette = [...this.state.palette];
-
-    // remove following panels
-    const paletteLength = palette.length;
 
     palette.length = Math.min(palette.length, index + 1);
     const lastPanel = palette.slice(-1)[0];
@@ -52,18 +47,12 @@ class App extends Component {
 
     const mix = swatchMix.map((name) => _.find(DAWN_DUSK, { name }));
 
-    // handle deselect
-    // if (current.name === swatch.name) {
-    //   palette.pop();
-    // }
-    // else {
     current.swatch = swatch;
     let name = index < paletteNames.length ? paletteNames[index] : paletteNames.slice(-1)[0];
     name = name.replace('{{index}}', palette.length - paletteNames.length + 1);
     current = {
       name,
       isGrouped: false,
-      // convert to swatches
       mix,
       swatch: null,
     };
@@ -71,20 +60,15 @@ class App extends Component {
     if (palette.length < 5 && mix.length) {
       palette.push(current);
     }
-    // }
-
     // Primary choice affects CTA
     let cta = this.state.cta;
     if (index === 0) {
       const result = this.getCtaFromPrimary(swatch);
       palette[0].isGrouped = false;
-      // // palette[0].swatch = swatch;
       palette[0].mix = result.mix;
       cta = result.cta;
-      // this.chooseCta(cta);
     }
-    // palette = _.map(COLORS, name => _.find(COLORS, { name }))
-    this.setState({ palette, cta }, () => {
+    this.setState({ palette, cta, isLastPanelHidden: false }, () => {
       if (cta) {
         this.setPageThemeAsCta();
       }
@@ -116,6 +100,11 @@ class App extends Component {
     });
   }
 
+  get isSlim() {
+    const { palette, isLastPanelHidden } = this.state;
+    return palette.length + (isLastPanelHidden ? -1 : 0) > 3;
+  }
+
   getCtaFromPrimary(primary) {
     let ctaName;
     let mix;
@@ -141,12 +130,50 @@ class App extends Component {
     this.setState({ experience });
   }
 
-  createSwatchPanel({ name, mix, onChanged, isGrouped, swatch, canRemove, isSlim, isShowIncluded }) {
-    return <SwatchPanel key={'Swatch ' + name} list={mix} label={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} canRemove={canRemove} removePanel={() => this.hideLastPanel()} slim={isSlim} showNextPanel={isShowIncluded ? () => this.showLastPanel(): null} />
+  // TODO: cleanup and simplify
+  createPanels() {
+    const { palette, isLastPanelHidden, cta } = this.state;
+    const isSlim = this.isSlim;
+    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim });
+
+    const panels = palette.map((panel, index, list) => {
+      const onChanged = (swatch) => this.chooseSwatch(swatch, index);
+      let canRemove = false;
+      let canHide = false;
+      if (index > 0 && index === list.length - 1) {
+        canHide = true;
+      }
+      else if (isLastPanelHidden && index === list.length - 2 && index > 0) {
+        canRemove = true;
+      }
+      let isShowIncluded = false;
+      if (isLastPanelHidden && index === list.length - 2) {
+        isShowIncluded = true;
+      }
+      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped, canRemove, canHide, isSlim, isShowIncluded })
+    });
+
+    if (isLastPanelHidden && palette.length > 1) {
+      panels.pop();
+    }
+    return [ctaPanel, ...panels];
+  }
+
+  createSwatchPanel({ name, mix, onChanged, isGrouped, swatch, canRemove, canHide, isShowIncluded }) {
+    const isSlim = this.isSlim;
+    const removeCb = canHide
+      ? () => this.hideLastPanel()
+      : () => this.removeLastPanel();
+    return <SwatchPanel key={'Swatch ' + name} list={mix} label={name} onActiveChanged={(...args) => onChanged(...args)} grouped={isGrouped} swatch={swatch} canRemove={canRemove || canHide} removePanel={removeCb} slim={isSlim} showNextPanel={isShowIncluded ? () => this.showLastPanel(): null} />
   }
 
   hideLastPanel() {
     this.setState({ isLastPanelHidden: true });
+  }
+  removeLastPanel() {
+    const palette = this.state.palette;
+    palette.pop();
+    this.setState({ palette });
   }
 
   showLastPanel() {
@@ -157,27 +184,12 @@ class App extends Component {
     this.setState({ isFullMode: !this.state.isFullMode });
   }
 
+
   render() {
-    const { palette, cta, experience, isLastPanelHidden, isFullMode } = this.state;
-    const isSlim = palette.length + (isLastPanelHidden ? -1 : 0) > 3;
-    const ctaPanel = this.createSwatchPanel({ name: 'Call to action', mix: CALL_TO_ACTION, onChanged: swatch => this.chooseCta(swatch), swatch: cta, isSlim });
+    const { palette, cta, experience, isFullMode } = this.state;
+    const isSlim = this.isSlim;
 
-    const panels = palette.map((panel, index, list) => {
-      const onChanged = (swatch) => this.chooseSwatch(swatch, index);
-      let canRemove = false;
-      if (index > 0 && index === list.length - 1) {
-        canRemove = true;
-      }
-      let isShowIncluded = false;
-      if (isLastPanelHidden && index === list.length - 2) {
-        isShowIncluded = true;
-      }
-      return this.createSwatchPanel({ name: panel.name, mix: panel.mix, onChanged, isGrouped: panel.isGrouped, canRemove, isSlim, isShowIncluded })
-    });
-
-    if (isLastPanelHidden) {
-      panels.pop();
-    }
+    const panels = this.createPanels();
 
     const numSwatches = palette.filter(item => item.swatch).length;
 
@@ -197,20 +209,14 @@ class App extends Component {
 
     const classNames = !cta ? 'App--no-primary' : '';
 
-    const content = (!isFullMode ?
-      <Fragment>
-        <ControlPanel onChange={name => this.changeExperience(name)} experience={experience} />
-        {ctaPanel}
-        {panels}
-      </Fragment>
-      : null
-    );
-
     // const neutralList = _.map(neutrals, name => _.find(COLORS, { name }));
     return (
       <div className={`App ${classNames}`}>
-        {content}
-        <PreviewPanel palette={weightedPalette} neutrals={weightedNeutrals} cta={cta} toggleFullMode={()=>this.toggleFullMode()} isFullMode={isFullMode} />
+        <div className={`App-panels ${isFullMode ? 'App-panels--hidden' : ''}`}>
+          <ControlPanel onChange={name => this.changeExperience(name)} experience={experience} />
+          {panels}
+        </div>
+        <PreviewPanel palette={weightedPalette} neutrals={weightedNeutrals} cta={cta} toggleFullMode={()=>this.toggleFullMode()} isFullMode={isFullMode} isSlim={isSlim} />
       </div>
     );
   }

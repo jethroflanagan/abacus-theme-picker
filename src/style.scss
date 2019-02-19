@@ -1,4 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro'); */
+@import "src/vars";
+
 :root {
   --primary-color: #2d2323;
 }
@@ -143,7 +145,16 @@ input[type=number] {
 
 .App {
   display: flex;
+  &-panels {
+    display: flex;
+    &--hidden {
+      & > * {
+        width: 0;
+      }
+    }
+  }
 }
+
 
 .PaletteList {
   margin-left: 40px;

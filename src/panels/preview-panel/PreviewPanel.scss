@@ -54,7 +54,10 @@
     height: 800px;
     max-height: calc(100vh - 40px);
     box-shadow: 0 0 70px rgba(0,0,0,0.2);
-    transition: padding .1s ease-out;
+    transition: padding .1s ease-out, width .1s ease-out;
+    &--slim {
+      width: 100px;
+    }
     &--padded {
       padding: 5px;
       .PalettePreview-swatch {
@@ -214,6 +217,18 @@
   position: absolute;
   top: 0;
   left: 10px;
+  animation: show-logo $ease forwards;
+}
+
+@keyframes show-logo {
+  0% {
+    opacity: 0;
+    left: 0;
+  }
+  100% {
+    opacity: 1;
+    left: 10px;
+  }
 }
 
 .FullModeToggle {

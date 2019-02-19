@@ -5,6 +5,8 @@
   width: 200px;
   min-height: 100vh;
   color: #eee;
+  overflow: hidden;
+  transition: width $ease-fast;
   &-title {
     padding: 10px 20px;
     font-size: 14px;
