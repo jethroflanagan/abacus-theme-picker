@@ -6,6 +6,7 @@ import { Logo } from 'src/components/logo/Logo';
 import { downloadImage } from 'src/utils/export';
 import { toRgbCss } from '../../utils/helpers';
 import { PREVIEW_WEIGHTS } from '../../config';
+import FullScreenAsset from '../../assets/fullscreen.png';
 import './PreviewPanel.scss';
 
 export class PreviewPanel extends Component  {
@@ -108,7 +109,7 @@ export class PreviewPanel extends Component  {
         {/* <button onClick={() => this.getImageData(this.refs.previewEl)} download="chroma-palette.png">DOWN</button> */}
 
         {isFullMode ? <div className="PalettePreview-logo"><Logo /></div> : null }
-        <div className={`FullModeToggle`} onClick={() => this.toggleFullMode()}>👓</div>
+        <div className={`FullModeToggle`} onClick={() => this.toggleFullMode()}><img src={FullScreenAsset} /></div>
         <div className={`PaddingToggle ${separateColors ? ' PaddingToggle--gap': ''}`} onClick={() => this.setSeparateColors(!separateColors)}>
           <div className="PaddingToggle-pane"/>
           <div className="PaddingToggle-pane"/>

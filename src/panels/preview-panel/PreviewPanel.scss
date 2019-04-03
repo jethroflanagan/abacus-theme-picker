@@ -259,6 +259,10 @@
   justify-content: center;
   padding: 2px;
   cursor: pointer;
+  & img {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 

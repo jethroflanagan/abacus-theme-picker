@@ -124,7 +124,7 @@ export class SwatchPanel extends Component  {
 
     // swap to "plus" header for panels where colour is chosen
     const header = (!active
-      ? <EmptySwatchHeader />
+      ? <EmptySwatchHeader label={label} />
       : <MainSwatch swatch={active} label={label} />
     );
 

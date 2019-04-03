@@ -7,9 +7,8 @@ export default (props) => {
   if (!swatch) {
     return (
       <div className='MainSwatch'>
+        <div className="MainSwatch-block MainSwatch-block--empty"/>
         <div className="MainSwatch-hint">{label}</div>
-        <div className="MainSwatch-block MainSwatch-block--empty">
-        </div>
       </div>
     );
   }
@@ -25,11 +24,11 @@ export default (props) => {
 
   return (
     <div className='MainSwatch'>
-      <div className="MainSwatch-hint">{label}</div>
       <div className="MainSwatch-block" style={{ backgroundColor: toRgbCss(swatch.rgb) }}>
         <div className="MainSwatch-label" style={labelStyle}>{swatch.name}</div>
         <div className="MainSwatch-hex" style={labelStyle}>#{swatch.hex}</div>
       </div>
+      <div className="MainSwatch-hint">{label}</div>
     </div>
   );
 }

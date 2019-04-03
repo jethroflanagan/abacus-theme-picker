@@ -1,4 +1,5 @@
 /* @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro'); */
+@import "src/fonts";
 @import "src/vars";
 
 :root {
@@ -8,7 +9,7 @@
   box-sizing: border-box;
 }
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: $font-family-secondary;
   margin: 0;
 }
 .list {

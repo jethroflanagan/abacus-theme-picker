@@ -1,7 +1,7 @@
 @import 'src/vars';
 
 .ControlPanel {
-  background: $color-text-dark;
+  background: #524a4a;
   width: 200px;
   min-height: 100vh;
   color: #eee;
@@ -9,15 +9,19 @@
   transition: width $ease-fast;
   &-title {
     padding: 10px 20px;
-    font-size: 14px;
+    font-size: 12px;
+    text-transform: uppercase;
     margin-top: 40px;
-    color: #fff;
-    font-weight: bold;
+    letter-spacing: 1;
+    color: #9a9595;
+    font-weight: 400;
+    font-family: $font-family-secondary;
   }
   &-experience {
     padding: 10px 20px;
-    color: #aaa;
+    color: #cac7c7;
     cursor: pointer;
+    font-size: 16px;
     transition: color $ease, background $ease-fast;
     &--active {
       background: var(--primary-color);
